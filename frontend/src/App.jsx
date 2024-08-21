@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './App.css'
-import UploadDoc from './pages/uploadDoc'
+import { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import UploadDoc from "./pages/UploadDoc.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route
-          path='/'
+          path="/"
           element={
             <>
               <h1>Hello World</h1>
@@ -16,7 +16,7 @@ function App() {
           }
         />
         <Route
-          path='/upload'
+          path="/upload"
           element={
             <>
               <UploadDoc />
@@ -25,7 +25,7 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

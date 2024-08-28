@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 import DocVerifyImg from '../assets/img/doc-verify.png'
 import analysisImg from '../assets/img/analysis.png'
 import moneyImg from '../assets/img/money.png'
@@ -203,6 +204,7 @@ const AboutImg = styled.img`
   height: 300px;
 `
 const Home = () => {
+  const navigate = useNavigate()
   return (
     <>
       <Hero>
@@ -217,6 +219,9 @@ const Home = () => {
           <span
             className='material-symbols-outlined'
             style={{ color: 'black' }}
+            onClick={() => {
+              navigate('/upload')
+            }}
           >
             document_scanner
           </span>

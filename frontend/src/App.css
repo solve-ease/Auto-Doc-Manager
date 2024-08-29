@@ -4,12 +4,6 @@
   box-sizing: border-box;
 }
 :root {
-  --font-ex-large: 2.25rem;
-  --font-large: 2rem;
-  --font-medium: 1.5rem;
-  --font-mid-medium: 1.15rem;
-  --font-small: 0.85rem;
-  --font-ex-small: 0.7rem;
   --font-bold: 500;
   --font-mid-bold: 600;
   --font-ex-bold: 700;

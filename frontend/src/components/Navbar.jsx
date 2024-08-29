@@ -80,7 +80,7 @@ const LoginBtn = styled.button``
 
 const RegisterBtn = styled.button``
 
-const Navbar = ({ lang, setLang }) => {
+const Navbar = ({ lang, setLang, setDefaultSize }) => {
   return (
     <>
       <GoiNavbar>
@@ -90,10 +90,28 @@ const Navbar = ({ lang, setLang }) => {
         </GoiLogo>
         <GoiOptions>
           <SkipBtn>Skip to main content</SkipBtn> |
-          <FontSmallBtn>A-</FontSmallBtn>
-          <FontResetBtn>A</FontResetBtn>
-          <FontLargeBtn>A+</FontLargeBtn> |
-          <ThemeBtn className='material-symbols-outlined'>light_mode</ThemeBtn>{' '}
+          <FontSmallBtn
+            onClick={() => {
+              setDefaultSize((prev) => prev - 1)
+            }}
+          >
+            A-
+          </FontSmallBtn>
+          <FontResetBtn
+            onClick={() => {
+              setDefaultSize(16)
+            }}
+          >
+            A
+          </FontResetBtn>
+          <FontLargeBtn
+            onClick={() => {
+              setDefaultSize((prev) => prev + 1)
+            }}
+          >
+            A+
+          </FontLargeBtn>{' '}
+          |<ThemeBtn className='material-symbols-outlined'>light_mode</ThemeBtn>{' '}
           |
           <LangBtn>
             <span className='material-symbols-outlined'>translate</span>
@@ -125,6 +143,7 @@ const Navbar = ({ lang, setLang }) => {
 
 Navbar.propTypes = {
   lang: PropTypes.string.isRequired,
-  setLang: PropTypes.func.isRequired
+  setLang: PropTypes.func.isRequired,
+  setDefaultSize: PropTypes.func.isRequired
 }
 export default Navbar

@@ -1,19 +1,24 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Logo from '../assets/img/logo.png'
+import indianFlag from '../assets/img/indian-flag.png'
+
 const GoiNavbar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
   background-color: #232323;
   color: white;
-  padding: 0.5rem;
+  padding: 0.2rem;
 `
 const GoiLogo = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
 `
-const GoiImg = styled.img``
+const GoiImg = styled.img`
+  height: 20px;
+`
 const GoiText = styled.p`
   text-decoration: line-through;
 `
@@ -43,9 +48,13 @@ const Nav = styled.nav`
   align-items: center;
   padding: 0.5rem 2rem;
 `
-
+const LogoDiv = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`
 const NavLogo = styled.img`
-  height: 3.5rem;
+  height: 2.5rem;
 `
 
 const NavLinks = styled.div`
@@ -76,7 +85,7 @@ const Navbar = ({ lang, setLang }) => {
     <>
       <GoiNavbar>
         <GoiLogo>
-          <GoiImg src='/' alt='' />
+          <GoiImg src={indianFlag} alt='national Amblem' />
           <GoiText>Government of India</GoiText>
         </GoiLogo>
         <GoiOptions>
@@ -93,7 +102,12 @@ const Navbar = ({ lang, setLang }) => {
         </GoiOptions>
       </GoiNavbar>
       <Nav>
-        <NavLogo src={Logo} />
+        <LogoDiv>
+          <NavLogo src={Logo} />
+          <span className='font-bold'>
+            AutoDoc <div>Verifier</div>
+          </span>
+        </LogoDiv>
         <NavLinks>
           <NavLink href='#home'>Home</NavLink>
           <NavLink href='#about'>About</NavLink>

@@ -4,6 +4,7 @@ import UploadDoc from './pages/UploadDoc'
 import Navbar from './components/Navbar'
 import { useState } from 'react'
 import Home from './pages/Home'
+import Footer from './components/Footer'
 function App() {
   const [lang, setLang] = useState('en')
   return (
@@ -27,6 +28,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }

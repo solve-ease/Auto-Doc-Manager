@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import DocVerifyImg from '../assets/img/doc-verify.png'
 import analysisImg from '../assets/img/analysis.png'
 import moneyImg from '../assets/img/money.png'
 import voteImg from '../assets/img/vote.png'
@@ -23,9 +22,9 @@ const Hero = styled.div`
   justify-content: center;
   background-color: #232323;
   color: white;
-  height: 70vh;
+  height: 50vh;
   gap: 10px;
-  margin-bottom: 10vh;
+  padding: 0 20vw;
 `
 const HeroH1 = styled.h1`
   text-align: center;
@@ -49,7 +48,7 @@ const QuickLinksSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20vh 10vw;
+  padding: 2vh 10vw;
   gap: 20px;
 `
 const QuickLinksCards = styled.div`
@@ -86,27 +85,12 @@ const ButtonLinks = styled.section`
   align-items: center;
   gap: 20px;
 `
-const DocVerifySection = styled.section`
-  display: flex;
-  align-items: center;
-  padding: 10vh 10vw;
-`
-const DocVerifyText = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 30px;
-`
-const DocVerifyImage = styled.img`
-  height: 400px;
-`
-
 const CategorySection = styled.section`
   display: flex;
   flex-direction: column;
   padding: 10vh 10vw;
   align-items: center;
-  gap: 30px;
+  gap: 50px;
 `
 const CategoryHeading = styled.div`
   display: flex;
@@ -130,47 +114,15 @@ const CategoryCard = styled.div`
 const CategoryCardImg = styled.img`
   height: 75px;
 `
-// Search bar container
-const SearchBarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid var(--color-primary);
-`
-
-// Search input field
-const SearchInput = styled.input`
-  flex: 1;
-  padding: 10px;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-  font-size: 1rem;
-`
-
-// Search button
-const SearchButton = styled.button`
-  padding: 10px 20px;
-  border: none;
-  border-radius: 0 5px 5px 0;
-  background-color: var(--color-primary);
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  &:hover {
-    background-color: #0056b3;
-  }
-`
-
 //Steps Section
 const StepsSection = styled.section`
   position: relative;
   display: flex;
   align-items: center;
-  margin: 20vh 10vw;
+  padding: 10vh 10vw;
   gap: 100px;
+  background-color: #d6e4f0;
+  border-radius: 10px;
 `
 const StepsText = styled.div`
   display: flex;
@@ -181,18 +133,14 @@ const StepsText = styled.div`
 const StepsImg = styled.img`
   height: 500px;
 `
-const CompassImg = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-`
+const CompassImg = styled.img``
 
 //About section
 const AboutSection = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 30vh 10vw;
+  margin: 20vh 10vw;
   gap: 100px;
 `
 const AboutText = styled.section`
@@ -230,7 +178,7 @@ const Home = () => {
 
       <QuickLinksSection>
         <QuickLinksCards>
-          <h1 className='font-ex-large font-bold'>
+          <h1 className='font-large font-bold'>
             Quick <span className='color-primary'> Links</span>{' '}
           </h1>
           <QuickLinkCard color='#A7C1F2'>
@@ -282,30 +230,28 @@ const Home = () => {
         </ButtonLinks>
       </QuickLinksSection>
 
-      <DocVerifySection>
-        <DocVerifyText>
-          <h1 className='font-ex-large font-bold'>Verify Documents</h1>
+      <AboutSection>
+        <AboutText>
+          <h1 className='font-large font-bold'>About us</h1>
           <p>
-            Our application accelerates the traditionally slow document
-            verification process by leveraging advanced AI technology, ensuring
-            rapid, accurate, and secure verification of your documents, saving
-            you valuable time and effort
+            Our platform is a groundbreaking initiative that enhances digital
+            empowerment by providing secure access to authentic documents
+            through a state-of-the-art digital interface. Leveraging AI and
+            blockchain technology, it offers a reliable cloud-based solution for
+            the generation, storage, verification, and retrieval of essential
+            documents. Designed for both individuals and organizations, our
+            platform ensures security, transparency, and efficiency, empowering
+            users to manage their vital documents with confidence and ease.
           </p>
-          <button className='btn'>Scan Document</button>
-        </DocVerifyText>
-        <DocVerifyImage src={DocVerifyImg} alt='DocVerify' />
-      </DocVerifySection>
-
+        </AboutText>
+        <AboutImg src={aboutImg} />
+      </AboutSection>
       <CategorySection>
         <CategoryHeading>
-          <h1 className='font-ex-large font-bold'>
+          <h1 className='font-large font-bold'>
             Find Your Document Based on{' '}
             <span className='color-primary'>Category</span>
           </h1>
-          <SearchBarContainer>
-            <SearchInput type='text' placeholder='Search...' />
-            <SearchButton>Search</SearchButton>
-          </SearchBarContainer>
         </CategoryHeading>
         <CategoryCards>
           <CategoryCard>
@@ -320,8 +266,6 @@ const Home = () => {
             <CategoryCardImg src={idCard} alt='id card' />
             <span className='font-mid-bold'>Identity & Docs </span>
           </CategoryCard>
-        </CategoryCards>
-        <CategoryCards>
           <CategoryCard>
             <CategoryCardImg src={moneyBag} alt='Money bad' />
             <span className='font-mid-bold'>Bank </span>
@@ -330,6 +274,8 @@ const Home = () => {
             <CategoryCardImg src={tank} alt='tank' />
             <span className='font-mid-bold'>Ministry of Defence </span>
           </CategoryCard>
+        </CategoryCards>
+        <CategoryCards>
           <CategoryCard>
             <CategoryCardImg src={manRunning} alt='man running' />
             <span className='font-mid-bold'>Sports and Activities </span>
@@ -343,7 +289,8 @@ const Home = () => {
 
       <StepsSection>
         <StepsText>
-          <h1 className='font-bold font-ex-large'>
+          <CompassImg src={compassImg} />
+          <h1 className='font-bold font-large'>
             Let’s start verification with few and simple steps!
           </h1>
           <h3 className=''>
@@ -355,24 +302,7 @@ const Home = () => {
           <button className='btn'>Get Started</button>
         </StepsText>
         <StepsImg src={stepsImg} />
-        <CompassImg src={compassImg} />
       </StepsSection>
-      <AboutSection>
-        <AboutText>
-          <h1 className='font-ex-large font-bold'>About us</h1>
-          <p>
-            Our platform is a groundbreaking initiative that enhances digital
-            empowerment by providing secure access to authentic documents
-            through a state-of-the-art digital interface. Leveraging AI and
-            blockchain technology, it offers a reliable cloud-based solution for
-            the generation, storage, verification, and retrieval of essential
-            documents. Designed for both individuals and organizations, our
-            platform ensures security, transparency, and efficiency, empowering
-            users to manage their vital documents with confidence and ease.
-          </p>
-        </AboutText>
-        <AboutImg src={aboutImg} />
-      </AboutSection>
     </>
   )
 }

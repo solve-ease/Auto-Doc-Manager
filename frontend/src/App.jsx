@@ -12,7 +12,7 @@ function App() {
       <Navbar lang={lang} setLang={setLang} />
       <Routes>
         <Route
-          path='/'
+          path="/"
           element={
             <>
               <Home />
@@ -20,7 +20,7 @@ function App() {
           }
         />
         <Route
-          path='/upload'
+          path="/upload"
           element={
             <>
               <UploadDoc />
@@ -30,7 +30,7 @@ function App() {
       </Routes>
       <Footer />
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

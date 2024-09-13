@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Logo from '../assets/img/logo.png'
 import indianFlag from '../assets/img/indian-flag.png'
+import { useNavigate } from 'react-router-dom'
 
 const GoiNavbar = styled.div`
   display: flex;
@@ -81,6 +82,7 @@ const LoginBtn = styled.button``
 const RegisterBtn = styled.button``
 
 const Navbar = ({ lang, setLang, setDefaultSize }) => {
+  const navigate = useNavigate()
   return (
     <>
       <GoiNavbar>
@@ -133,8 +135,23 @@ const Navbar = ({ lang, setLang, setDefaultSize }) => {
           <NavLink href='#contact'>Contact</NavLink>
         </NavLinks>
         <AuthLinks>
-          <RegisterBtn className='btn'>Register</RegisterBtn>|
-          <LoginBtn className='btn-outlined'>Login</LoginBtn>
+          <RegisterBtn
+            className='btn'
+            onClick={() => {
+              navigate('/register')
+            }}
+          >
+            Register
+          </RegisterBtn>
+          |
+          <LoginBtn
+            className='btn-outlined'
+            onClick={() => {
+              navigate('/login')
+            }}
+          >
+            Login
+          </LoginBtn>
         </AuthLinks>
       </Nav>
     </>

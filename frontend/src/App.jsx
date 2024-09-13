@@ -6,6 +6,8 @@ import Navbar from './components/Navbar'
 import { useState } from 'react'
 import Home from './pages/Home'
 import Footer from './components/Footer'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -30,7 +32,7 @@ function App() {
       <Navbar lang={lang} setLang={setLang} setDefaultSize={setDefaultSize} />
       <Routes>
         <Route
-          path="/"
+          path='/'
           element={
             <>
               <Home />
@@ -38,17 +40,33 @@ function App() {
           }
         />
         <Route
-          path="/upload"
+          path='/upload'
           element={
             <>
               <UploadDoc />
             </>
           }
         />
+        <Route
+          path='/login'
+          element={
+            <>
+              <LoginPage />
+            </>
+          }
+        />
+        <Route
+          path='/register'
+          element={
+            <>
+              <RegisterPage />
+            </>
+          }
+        />
       </Routes>
       <Footer />
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

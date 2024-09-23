@@ -11,7 +11,7 @@ contract UserRoles is AccessControl {
     bytes32 public constant INDIVIDUAL_ROLE = keccak256("INDIVIDUAL_ROLE");
 
     constructor() {
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     function addIssuingAuthority(

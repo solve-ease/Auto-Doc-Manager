@@ -28,7 +28,7 @@ const UploadDoc = () => {
     const formData = new FormData()
     formData.append('file', selectedFile)
     try {
-      const response = await fetch('http://localhost:3000/upload-doc', {
+      const response = await fetch('http://localhost:5000/api/upload-doc', {
         method: 'POST',
         body: formData
       })
@@ -45,13 +45,15 @@ const UploadDoc = () => {
   }
   return (
     <MainContainer>
-      <UploadForm onSubmit={handleSubmit}>
+      <UploadForm>
         <DocumentInput
           type='file'
           accept='application/pdf'
           onChange={handleFileChange}
         />
-        <SubmitButton type='submit'>Upload</SubmitButton>
+        <SubmitButton onClick={handleSubmit} type='submit'>
+          Upload
+        </SubmitButton>
       </UploadForm>
     </MainContainer>
   )

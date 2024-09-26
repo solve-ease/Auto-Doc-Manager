@@ -1,11 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-
-import "@openzeppelin/contracts/utils/Counters.sol";
+  
 
 contract Document {
-    using Counters for Counters.Counter;
-    Counters.Counter private _documentIds;
+      uint256 private _documentIds;
+
+    function mintToken() public returns (uint256) {
+        _documentIds++;
+        uint256 newTokenId = _documentIds;
+        return newTokenId;
+    }
 
     struct DocumentInfo {
         uint256 id;
@@ -34,9 +38,9 @@ contract Document {
         string memory _ipfsHash,
         address _individualOwner,
         string memory _documentType
-    ) public returns (uint256) {
-        _documentIds.increment();
-        uint256 newDocumentId = _documentIds.current();
+    ) public virtual returns (uint256) {
+        mintToken();
+        uint256 newDocumentId = _documentIds;
 
         documents[newDocumentId] = DocumentInfo({
             id: newDocumentId,
@@ -55,7 +59,7 @@ contract Document {
         return newDocumentId;
     }
 
-    function verifyDocument(uint256 _documentId) public {
+    function verifyDocument(uint256 _documentId) public virtual {
         require(
             !documents[_documentId].isVerified,
             "Document is already verified"
@@ -66,7 +70,7 @@ contract Document {
 
     function getDocument(
         uint256 _documentId
-    ) public view returns (DocumentInfo memory) {
+    ) public virtual view returns (DocumentInfo memory) {
         return documents[_documentId];
     }
 

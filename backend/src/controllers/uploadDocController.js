@@ -30,10 +30,11 @@ const uploadDoc = async (req, res) => {
     //checking if pinata is working
     const auth = await pinata.testAuthentication()
     console.log(auth)
-    // Uploading to Pinata
+    // Upload and pin file to Pinata
     const upload = await pinata.upload.file(file)
     console.log(upload)
 
+    //get file from pinata using cid
     // const fileFromIpfs = await pinata.gateways.get(
     //   'bafkreih6nocqbn5veyg4m6bc3lu2typvj3ydyjvfg7yxbwmwyaygizixr4'
     // )

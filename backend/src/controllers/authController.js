@@ -137,26 +137,8 @@ const token = (req, res) => {
   })
 }
 
-const uploadDoc = async (req, res) => {
-  if (!req.file) {
-    return res.status(400).send('No file uploaded.')
-  }
-  const fileName = req.file.filename
-  const filePath = path.join(__dirname, 'uploads', fileName)
-  try {
-    console.log('inside try')
-    const text = await extractTextFromPdf(filePath)
-    res.status(200).send({
-      message: 'File uploaded successfully',
-      text: text
-    })
-  } catch (err) {
-    res.status(500).json({ error: err.message })
-  }
-}
 module.exports = {
   register,
   login,
-  token,
-  uploadDoc
+  token
 }

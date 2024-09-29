@@ -18,5 +18,24 @@ module.exports = {
             chainId: 11155111,
         },
     },
-    solidity: "0.8.8",
+    solidity: {
+        compilers: [
+            {
+                version: "0.8.0",
+            },
+            {
+                version: "0.8.20",
+            },
+            {
+                version: "0.8.24",
+            },
+            {
+                version: "0.7.6",
+            },
+            {
+                version: "0.6.12",
+            },
+            // Add other versions as needed
+        ],
+    },
 }

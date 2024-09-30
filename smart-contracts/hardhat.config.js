@@ -13,19 +13,31 @@ console.log(typeof process.env.PRIVATE_KEY)
 
 module.exports = {
     defaultNetwork: "hardhat",
-    // networks: {
-    //     sepolia: {
-    //         url: SEPOLIA_RPC_URL,
-    //         accounts: [PRIVATE_KEY],
-    //         chainId: 11155111,
-    //     },
-    // },
-    solidity: "0.8.8",
     networks: {
         hardhat: {},
         sepolia: {
             url: API_URL,
             accounts: [`0x${PRIVATE_KEY}`],
         },
+    },
+    solidity: {
+        compilers: [
+            {
+                version: "0.8.0",
+            },
+            {
+                version: "0.8.20",
+            },
+            {
+                version: "0.8.24",
+            },
+            {
+                version: "0.7.6",
+            },
+            {
+                version: "0.6.12",
+            },
+            // Add other versions as needed
+        ],
     },
 }

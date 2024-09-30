@@ -11,13 +11,13 @@ contract DocumentManagement is UserRoles, Document {
         string memory _ipfsHash,
         address _individualOwner,
         string memory _documentType
-    ) public onlyRole(ISSUING_AUTHORITY_ROLE) returns (uint256) {
+    ) public onlyRole(ISSUING_AUTHORITY_ROLE) override returns (uint256) {
         return super.issueDocument(_ipfsHash, _individualOwner, _documentType);
     }
 
     function verifyDocument(
         uint256 _documentId
-    ) public onlyRole(VERIFYING_AUTHORITY_ROLE) {
+    ) public onlyRole(VERIFYING_AUTHORITY_ROLE) override {
         super.verifyDocument(_documentId);
     }
 
@@ -27,7 +27,7 @@ contract DocumentManagement is UserRoles, Document {
         public
         view
         onlyRole(VERIFYING_AUTHORITY_ROLE)
-        returns (DocumentInfo memory)
+        override returns (DocumentInfo memory)
     {
         return super.getDocument(_documentId);
     }

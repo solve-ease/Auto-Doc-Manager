@@ -1,9 +1,9 @@
-SPDX-License-Identifier: MIT
+//SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
 
 // using chainlink price feed for matic/usd price
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
 contract FileStorage {
     address payable public owner;
@@ -43,7 +43,7 @@ contract FileStorage {
     }
 
     // Get matic/usd price from chainlink price feed
-    function getMaticUsdPrice() internal returns (uint256, uint256) {
+    function getMaticUsdPrice() internal view returns (uint256, uint256) {
         AggregatorV3Interface priceFeed = AggregatorV3Interface(
             priceFeedAddress
         );

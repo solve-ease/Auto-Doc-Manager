@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const MainContainer = styled.div`
@@ -11,7 +11,9 @@ const UploadForm = styled.form``
 const SubmitButton = styled.button``
 const UploadDoc = () => {
   const [selectedFile, setSelectedFile] = useState(null)
-
+  useEffect(() => {
+    console.log(selectedFile)
+  }, [selectedFile])
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0])
   }
@@ -26,14 +28,14 @@ const UploadDoc = () => {
     const formData = new FormData()
     formData.append('file', selectedFile)
     try {
-      const response = await fetch('http://localhost:3000/get-doc', {
+      const response = await fetch('http://localhost:5000/api/upload-doc', {
         method: 'POST',
         body: formData
       })
 
       if (response.ok) {
         const data = await response.json()
-        console.log('File uploaded successfully:', data)
+        console.log('File uploaded successfully:', data.text)
       } else {
         console.error('File upload failed:', response.statusText)
       }
@@ -43,13 +45,15 @@ const UploadDoc = () => {
   }
   return (
     <MainContainer>
-      <UploadForm onSubmit={handleSubmit}>
+      <UploadForm>
         <DocumentInput
           type='file'
           accept='application/pdf'
           onChange={handleFileChange}
         />
-        <SubmitButton type='submit'>Upload</SubmitButton>
+        <SubmitButton onClick={handleSubmit} type='submit'>
+          Upload
+        </SubmitButton>
       </UploadForm>
     </MainContainer>
   )

@@ -3,8 +3,7 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10
 const jwt = require('jsonwebtoken')
 const { supabase } = require('../utils/supabaseClient')
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+const { prisma } = require('../utils/prismaClient')
 
 const register = async (req, res) => {
   console.log('Request received')

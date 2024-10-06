@@ -16,3 +16,11 @@ model User {
   role      String   @default("user")
   createdAt DateTime @default(now())
 }
+model Document {
+  id             Int      @id @default(autoincrement())
+  issuerAddress  String
+  ownerAddress   String
+  createdAt      DateTime @default(now())
+  expiryAt       DateTime
+  type           String
+  }

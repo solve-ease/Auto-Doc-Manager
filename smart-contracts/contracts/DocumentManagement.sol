@@ -1,43 +1,36 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./UserRoles.sol";
-import "./Document.sol";
-
-contract DocumentManagement is UserRoles, Document {
-    constructor() UserRoles() {}
-
-    function issueDocument(
-        string memory _ipfsHash,
-        address _individualOwner,
-        string memory _documentType
-    ) public onlyRole(ISSUING_AUTHORITY_ROLE) override returns (uint256) {
-        return super.issueDocument(_ipfsHash, _individualOwner, _documentType);
+contract DocumentManagement {
+    // Document struct with CID and reference ID (off-chain database)
+    struct Document {
+        string cid;         // IPFS CID of the document
+        string referenceId; // Reference ID for off-chain database
     }
 
-    function verifyDocument(
-        uint256 _documentId
-    ) public onlyRole(VERIFYING_AUTHORITY_ROLE) override {
-        super.verifyDocument(_documentId);
+    // Mapping from owner address to their documents
+    mapping(address => Document[]) public documentsByOwner;
+
+    // Event emitted when a new document is issued
+    event DocumentIssued(address indexed owner, string cid, string referenceId);
+
+    // Function to issue a document for a specified owner
+    function issueDocument(address owner, string calldata cid, string calldata referenceId) external {
+        // Create the new document
+        Document memory newDoc = Document({
+            cid: cid,
+            referenceId: referenceId
+        });
+
+        // Add the document to the owner's list of documents
+        documentsByOwner[owner].push(newDoc);
+
+        // Emit the event for document issuance
+        emit DocumentIssued(owner, cid, referenceId);
     }
 
-    function getDocument(
-        uint256 _documentId
-    )
-        public
-        view
-        onlyRole(VERIFYING_AUTHORITY_ROLE)
-        override returns (DocumentInfo memory)
-    {
-        return super.getDocument(_documentId);
-    }
-
-    function getMyDocuments()
-        public
-        view
-        onlyRole(INDIVIDUAL_ROLE)
-        returns (uint256[] memory)
-    {
-        return super.getIndividualDocuments(msg.sender);
+    // Function to retrieve documents of a specific user
+    function getUserDocuments(address user) external view returns (Document[] memory) {
+        return documentsByOwner[user];
     }
 }

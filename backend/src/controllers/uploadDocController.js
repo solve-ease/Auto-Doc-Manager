@@ -2,8 +2,12 @@ const { pinata, auth } = require('../services/pinataService')
 const fs = require('fs')
 const { Blob, File } = require('blob-polyfill')
 const path = require('path')
-const { prisma } = require('../utils/prismaClient')
+const prisma = require('../utils/prismaClient')
 const { callIssueDocument } = require('./contractController')
+
+// Read the contractInfo.json file
+const contractInfoPath = path.join(__dirname, '../../config/contractInfo.json')
+const contractInfo = JSON.parse(fs.readFileSync(contractInfoPath, 'utf8'))
 
 const uploadToIPFS = async (fileBuffer, fileName) => {
   try {
@@ -17,17 +21,20 @@ const uploadToIPFS = async (fileBuffer, fileName) => {
     return err
   }
 }
-const uploadToDb = async (signer, ownerAddr, type) => {
+const uploadToDb = async (issuerAddr, ownerAddr, type) => {
   try {
-    const doc = await prisma.document.create({
-      data: {
-        ownerAddress: ownerAddr,
-        issuerAddress: signer.address,
-        type: type,
-        expiryAt: new Date()
-      }
-    })
-    return doc
+    console.log(issuerAddr)
+    if (issuerAddr) {
+      const doc = await prisma.document.create({
+        data: {
+          ownerAddress: ownerAddr,
+          issuerAddress: issuerAddr,
+          type: type,
+          expiryAt: new Date()
+        }
+      })
+      return doc
+    }
   } catch (err) {
     console.log(err)
     return err
@@ -35,7 +42,17 @@ const uploadToDb = async (signer, ownerAddr, type) => {
 }
 const uploadDoc = async (req, res) => {
   console.log('request received')
-  const { signer, ownerAddr, type } = req.body
+  const { issuerAddress, issuedTo: ownerAddr, docType: type } = req.body
+
+  console.log(issuerAddress, ownerAddr, type)
+  // Verify the signature
+  // const message = JSON.stringify(data);
+  // const recoveredAddress = ethers.utils.verifyMessage(message, signature);
+
+  // if (recoveredAddress.toLowerCase() !== address.toLowerCase()) {
+  //   return res.status(400).json({ error: 'Invalid signature' });
+  // }
+
   if (!req.file) {
     return res.status(400).send('No file uploaded.')
   }
@@ -50,12 +67,19 @@ const uploadDoc = async (req, res) => {
     const cid = upload.IpfsHash
 
     //uploading doc to db
-    const doc = await uploadToDb(req)
+    const doc = await uploadToDb(issuerAddress, ownerAddr, type)
+    const dbId = doc.id
     console.log(doc, 'doc successfully uploaded to db')
 
     //updating blockchain
-    const tx = await callIssueDocument(signer, cid, ownerAddr, doc.id)
-    console.log(tx, 'doc successfully uploaded to blockchain')
+    // const tx = await callIssueDocument(signer, cid, ownerAddr, doc.id)
+    // console.log(tx, 'doc successfully uploaded to blockchain')
+    const resData = {
+      cid: cid,
+      dbId: dbId,
+      contractInfo: contractInfo
+    }
+    res.status(200).json(resData)
   } catch (err) {
     console.log(err)
     res.status(500).json({ error: err.message })

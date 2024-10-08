@@ -10,8 +10,6 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 app.use(cors({ origin: 'http://localhost:5173' }))
 
-const { extractTextFromPdf } = require('./src/utils/textExtract')
-
 app.use('/auth', authRoutes)
 app.use('/api', uploadRoute)
 app.listen(port, () => {

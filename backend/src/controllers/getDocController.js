@@ -1,8 +1,17 @@
 const { pinata, auth } = require('../services/pinataService')
-const fs = require('fs')
-const { Blob, File } = require('blob-polyfill')
-const path = require('path')
 const prisma = require('../utils/prismaClient')
+const pako = require('pako')
+
+// Utility function to convert ArrayBuffer to Base64
+const arrayBufferToBase64 = (buffer) => {
+  let binary = ''
+  const bytes = new Uint8Array(buffer)
+  const len = bytes.byteLength
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i])
+  }
+  return btoa(binary)
+}
 
 const getDoc = async (req, res) => {
   try {
@@ -14,11 +23,37 @@ const getDoc = async (req, res) => {
         const dbData = await prisma.document.findUnique({
           where: { id: parseInt(doc.dbId) }
         })
-        return { ipfsData, dbData }
+        // Convert Blob to ArrayBuffer
+        const arrayBuffer = await ipfsData.data.arrayBuffer()
+
+        // Calculate original size
+        const originalSize = arrayBuffer.byteLength
+
+        // Compress the ArrayBuffer using pako
+        const compressed = pako.deflate(arrayBuffer)
+
+        // Calculate compressed size
+        const compressedSize = compressed.byteLength
+
+        // Calculate compression ratio and percentage
+        const compressionRatio = originalSize / compressedSize
+        const compressionPercentage =
+          ((originalSize - compressedSize) / originalSize) * 100
+        console.log(`Original Size: ${originalSize} bytes`)
+        console.log(`Compressed Size: ${compressedSize} bytes`)
+        console.log(`Compression Ratio: ${compressionRatio.toFixed(2)}`)
+        console.log(
+          `Compression Percentage: ${compressionPercentage.toFixed(2)}%`
+        )
+        // Convert the compressed data to Base64
+        const base64Data = arrayBufferToBase64(compressed)
+        return {
+          ipfsData: { data: base64Data, contentType: ipfsData.contentType },
+          dbData
+        }
       })
       // Wait for all promises to resolve
       const files = await Promise.all(filePromises)
-      console.log(files)
       res.status(200).json(files)
     }
   } catch (error) {

@@ -15,10 +15,12 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "ethers": "^6.13.3",
+    "pako": "^2.1.0",
     "react": "^18.3.1",
     "react-color": "^2.19.3",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
+    "react-spinners": "^0.14.1",
     "styled-components": "^6.1.12"
   },
   "devDependencies": {

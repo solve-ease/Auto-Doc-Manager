@@ -1,19 +1,27 @@
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import contractInfo from '../../config/contractInfo.json'
+import DocCard from '../components/DocCard'
+import pako from 'pako'
+import { HashLoader } from 'react-spinners'
 
 const Docs = () => {
   const [signer, setSigner] = useState(null)
-
+  const [signerAddress, setSignerAddress] = useState('')
+  const [docData, setDocData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
   const connectWallet = async () => {
     if (typeof window.ethereum !== 'undefined') {
       try {
         await window.ethereum.request({ method: 'eth_requestAccounts' })
         const provider = new ethers.BrowserProvider(window.ethereum)
         const signer = await provider.getSigner()
-        const IssuerAddr = await signer.getAddress()
-        console.log('Signer address:', IssuerAddr)
+        const addr = await signer.getAddress()
+        console.log('Signer address:', addr)
+        console.log('wallet connected')
         setSigner(signer)
+        setSignerAddress(addr)
       } catch (error) {
         console.error('Failed to connect wallet:', error)
       }
@@ -33,7 +41,7 @@ const Docs = () => {
       console.error(e)
     }
   }
-  const getDocFromIpfs = async (data) => {
+  const getDocFromBackend = async (data) => {
     const response = await fetch('http://localhost:5000/protected/get-docs', {
       method: 'POST',
       headers: {
@@ -42,16 +50,41 @@ const Docs = () => {
       body: JSON.stringify(data)
     })
     const result = await response.json()
+
+    //inflating the document blob data
+    result.forEach((doc) => {
+      // Convert Base64 to ArrayBuffer
+      const arrayBuffer = base64ToArrayBuffer(doc.ipfsData.data)
+      // Decompress the ArrayBuffer using pako
+      const decompressed = pako.inflate(arrayBuffer)
+
+      // Create a Blob from the decompressed ArrayBuffer
+      const blob = new Blob([decompressed], { type: 'application/pdf' })
+
+      // Create a URL for the Blob
+      const url = URL.createObjectURL(blob)
+      doc.ipfsData.url = url
+    })
     console.log(result)
+    return result
   }
-  const handleTxn = async (signer, contractInfo) => {
+  // Utility function to convert Base64 to ArrayBuffer
+  const base64ToArrayBuffer = (base64) => {
+    const binaryString = window.atob(base64)
+    const len = binaryString.length
+    const bytes = new Uint8Array(len)
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i)
+    }
+    return bytes.buffer
+  }
+
+  const handleTxn = async (signer, contractInfo, signerAddr) => {
     try {
-      if (signer && contractInfo) {
+      if (signer && contractInfo && signerAddr) {
         const contract = await getContract(signer, contractInfo)
         if (contract) {
-          const tx = await contract.getUserDocuments(
-            '0xFA406716883ad513Eb28AaDfDC6b9dd9C619F9fC'
-          )
+          const tx = await contract.getUserDocuments(signerAddr)
           return tx
         }
       } else {
@@ -62,9 +95,9 @@ const Docs = () => {
     }
   }
 
-  const fetchDocs = async (signer, contractInfo) => {
+  const fetchDocs = async (signer, contractInfo, signerAddr) => {
     try {
-      const txn = await handleTxn(signer, contractInfo)
+      const txn = await handleTxn(signer, contractInfo, signerAddr)
       if (txn && txn.length) {
         const docData = []
         txn.forEach((result) => {
@@ -75,20 +108,45 @@ const Docs = () => {
           docData.push(doc)
         })
         console.log(docData)
-        getDocFromIpfs(docData)
+        const result = await getDocFromBackend(docData)
+        setDocData(result)
+        setLoading(false)
       }
     } catch (e) {
       console.error(e)
+      setLoading(false)
+      setError('No Documents found')
     }
   }
 
   useEffect(() => {
     connectWallet()
   }, [])
+
   useEffect(() => {
-    fetchDocs(signer, contractInfo)
+    fetchDocs(signer, contractInfo, signerAddress)
   }, [signer])
-  return <div></div>
+  return docData.length > 0 ? (
+    <div className='flex flex-col items-center justify-center p-5 min-h-[80vh] flex-wrap gap-5 '>
+      <h1 className='text-5xl font-sans'>Your Documents</h1>
+      <div className='flex gap-5'>
+        {docData.map((doc, index) => {
+          return (
+            <DocCard
+              key={index}
+              docUrl={doc.ipfsData.url}
+              docName={doc.dbData.type}
+            />
+          )
+        })}
+      </div>
+    </div>
+  ) : (
+    <div className='flex items-center justify-center w-[95vw] h-[80vh]'>
+      {loading && <HashLoader color='#358fc3' />}
+      {error && <h1 className='text-5xl'>{error}</h1>}
+    </div>
+  )
 }
 
 export default Docs

@@ -272,7 +272,6 @@ const IssueDoc = () => {
                   : '#fff'
               }
               onChange={(color) => {
-                console.log(color, 'color')
                 handleBackgroundColorChange(color)
               }}
             />

@@ -7,9 +7,9 @@ import { useState } from 'react'
 import Home from './pages/Home'
 import Footer from './components/Footer'
 import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
 import IssueDoc from './pages/IssueDoc'
 import Docs from './pages/Docs'
+import Register from './pages/Register'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -69,7 +69,7 @@ function App() {
           path='/register'
           element={
             <>
-              <RegisterPage />
+              <Register />
             </>
           }
         />

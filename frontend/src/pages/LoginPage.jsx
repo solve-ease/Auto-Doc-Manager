@@ -29,7 +29,7 @@ const LoginPage = () => {
       localStorage.setItem('accessToken', response.access)
       localStorage.setItem('refreshToken', response.refresh)
       // Redirect to dashboard or home page
-      navigate('/farm-management')
+      navigate('/docs')
     } catch (error) {
       setError(error.message)
     }

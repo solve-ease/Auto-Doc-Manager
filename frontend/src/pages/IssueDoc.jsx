@@ -7,13 +7,15 @@ const IssueDoc = () => {
   const [currentBox, setCurrentBox] = useState(null)
   const [isDrawing, setIsDrawing] = useState(false)
   const [boxes, setBoxes] = useState([])
+  const [currentBoxType, setCurrentBoxType] = useState('rectangle')
   const [selectedBoxIndex, setSelectedBoxIndex] = useState(null)
   const [menuVisible, setMenuVisible] = useState(true)
   const [currentColor, setCurrentColor] = useState('#b02f2f')
-  const [currentBorderColor, setCurrentBorderColor] = useState('#7e1ce0')
+  const [currentBorderColor, setCurrentBorderColor] = useState('#000000')
   const [currentBackgroundColor, setCurrentBackgroundColor] =
     useState('transparent')
   const [colorPickerVisible, setColorPickerVisible] = useState(false)
+  const [selectedTool, setSelectedTool] = useState('select')
   const canvasRef = useRef(null)
 
   const handleImageUpload = (e) => {
@@ -56,6 +58,13 @@ const IssueDoc = () => {
       }
     }
   }, [imageSrc])
+
+  useEffect(() => {
+    console.log(selectedBoxIndex)
+    if (selectedBoxIndex !== null) {
+      console.log(boxes[selectedBoxIndex].backgroundColor)
+    }
+  }, [selectedBoxIndex])
   const handleMouseDown = (e) => {
     const rect = canvasRef.current.getBoundingClientRect()
     setCurrentBox({ x1: e.clientX - rect.left, y1: e.clientY - rect.top })
@@ -64,10 +73,18 @@ const IssueDoc = () => {
 
   const handleMouseMove = (e) => {
     if (!isDrawing) return
+    //checking if a drawing tool has been selected
+    if (selectedTool != 'labelBox' && selectedTool != 'textBox') {
+      alert('please select textbox or label box')
+      setIsDrawing(false)
+      return
+    }
+    const type = selectedTool === 'labelBox' ? 'labelBox' : 'textBox'
     const rect = canvasRef.current.getBoundingClientRect()
+    const text = ''
     const x2 = e.clientX - rect.left
     const y2 = e.clientY - rect.top
-    setCurrentBox((prevBox) => ({ ...prevBox, x2, y2 }))
+    setCurrentBox((prevBox) => ({ ...prevBox, x2, y2, type, text }))
   }
 
   const handleMouseUp = () => {
@@ -132,6 +149,10 @@ const IssueDoc = () => {
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
     boxes.forEach((box, index) => {
       const { x1, y1, x2, y2, borderColor, backgroundColor, color } = box
+      if (box.type === 'textBox') {
+        ctx.font = '16px Arial'
+        ctx.fillText(box.text, x1, y1 + 20)
+      }
       ctx.fillStyle = backgroundColor
       ctx.fillRect(x1, y1, x2 - x1, y2 - y1)
       ctx.strokeStyle = borderColor
@@ -146,6 +167,7 @@ const IssueDoc = () => {
           setSelectedBoxIndex(index)
         } else {
           setSelectedBoxIndex(null)
+          setCurrentBackgroundColor('transparent')
         }
       })
     })
@@ -211,7 +233,7 @@ const IssueDoc = () => {
     setColorPickerVisible(false)
   }
   return (
-    <div className='flex flex-col items-center my-4 gap-5'>
+    <div className='flex flex-col items-center my-4 gap-5 relative'>
       <input type='file' accept='image/*' onChange={handleImageUpload} />
       {imageSrc && (
         <canvas
@@ -235,51 +257,123 @@ const IssueDoc = () => {
           Generate Images
         </button>
       )}
-      (
-      <div
-        className='flex  gap-2 bg-[#218da1] text-white fixed bottom-5 p-3 rounded-2xl items-center'
-        onMouseLeave={handleMouseOutBox}
-      >
-        <span className='material-symbols-outlined'>arrow_selector_tool</span>
-        <span onClick={handleDeleteBox} className='material-symbols-outlined'>
-          delete
-        </span>
-        {/* <span onClick={() => handleEditBorderColor('blue')}>
+      {imageSrc && (
+        <div
+          className='flex  gap-2 bg-white fixed bottom-5 p-2 rounded-2xl items-center cursor-pointer '
+          onMouseLeave={handleMouseOutBox}
+        >
+          <span
+            className='material-symbols-outlined p-1 rounded-md transition-colors duration-300 ease-in-out'
+            style={{
+              backgroundColor:
+                selectedTool === 'select' ? '#ad6bf1' : 'transparent'
+            }}
+            onClick={() => setSelectedTool('select')}
+          >
+            arrow_selector_tool
+          </span>
+          <span
+            className='material-symbols-outlined p-1 rounded-md transition-colors duration-300 ease-in-out'
+            style={{
+              backgroundColor:
+                selectedTool === 'labelBox' ? '#ad6bf1' : 'transparent'
+            }}
+            onClick={() => setSelectedTool('labelBox')}
+          >
+            rectangle
+          </span>
+          <span
+            className='relative flex p-1 rounded-md transition-colors duration-300 ease-in-out'
+            style={{
+              backgroundColor:
+                selectedTool === 'textBox' ? '#ad6bf1' : 'transparent'
+            }}
+            onClick={() => setSelectedTool('textBox')}
+          >
+            <span className='material-symbols-outlined'>rectangle</span>
+            <span className='absolute inset-0 flex items-center justify-center text-xs font-medium'>
+              T
+            </span>
+          </span>
+          <span
+            className='material-symbols-outlined p-1 rounded-md transition-colors duration-300 ease-in-out'
+            style={{
+              backgroundColor:
+                selectedTool === 'delete' ? '#ad6bf1' : 'transparent'
+            }}
+            onClick={() => {
+              setSelectedTool('delete')
+              handleDeleteBox()
+            }}
+          >
+            delete
+          </span>
+          {/* <span onClick={() => handleEditBorderColor('blue')}>
           Edit Border Color
         </span> */}
-        <span>
-          <div
-            style={{
-              backgroundColor: currentBackgroundColor || 'transparent',
-              backgroundImage:
-                currentBackgroundColor != 'transparent'
-                  ? 'none'
-                  : 'repeating-linear-gradient(45deg, #ccc, #ccc 10px, #fff 10px, #fff 20px)'
-            }}
-            className='rounded-2xl h-5 w-5 '
-            onClick={() => {
-              setColorPickerVisible((prev) => !prev)
-            }}
-          ></div>
-          {colorPickerVisible && (
-            <SketchPicker
-              className='absolute bottom-full mb-2'
-              color={
-                selectedBoxIndex !== null &&
-                boxes[selectedBoxIndex] &&
-                boxes[selectedBoxIndex].backgroundColor
-                  ? boxes[selectedBoxIndex].backgroundColor
-                  : '#fff'
-              }
-              onChange={(color) => {
-                handleBackgroundColorChange(color)
+          <span>
+            <div
+              style={{
+                backgroundColor: currentBackgroundColor || 'transparent',
+                backgroundImage:
+                  currentBackgroundColor != 'transparent'
+                    ? 'none'
+                    : 'repeating-linear-gradient(45deg, #ccc, #ccc 10px, #fff 10px, #fff 20px)'
               }}
+              className='rounded-2xl h-5 w-5 '
+              onClick={() => {
+                setColorPickerVisible((prev) => !prev)
+              }}
+            ></div>
+            {colorPickerVisible && (
+              <SketchPicker
+                className='absolute bottom-full mb-2'
+                color={
+                  selectedBoxIndex !== null &&
+                  boxes[selectedBoxIndex] &&
+                  boxes[selectedBoxIndex].backgroundColor
+                    ? boxes[selectedBoxIndex].backgroundColor
+                    : '#fff'
+                }
+                onChange={(color) => {
+                  handleBackgroundColorChange(color)
+                }}
+              />
+            )}
+          </span>
+          <span
+            className='material-symbols-outlined cursor-pointer'
+            title='Add Label'
+          >
+            label
+          </span>
+        </div>
+      )}
+      {boxes.map((box, index) => {
+        if (box.type === 'textBox') {
+          return (
+            <input
+              key={index}
+              type='text'
+              style={{
+                position: 'absolute',
+                left: box.x1,
+                top: box.y,
+                fontSize: '16px'
+              }}
+              value={box.text}
+              onChange={(event) => {
+                setBoxes((prevBoxes) =>
+                  prevBoxes.map((box, i) =>
+                    i === index ? { ...box, text: event.target.value } : box
+                  )
+                )
+              }}
+              autoFocus
             />
-          )}
-        </span>
-        <span></span>
-      </div>
-      )
+          )
+        }
+      })}
     </div>
   )
 }

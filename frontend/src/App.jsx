@@ -9,6 +9,7 @@ import Footer from './components/Footer'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import AboutPage from './pages/AboutPage'
+import ServicesPage from './pages/ServicesPage'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -45,6 +46,14 @@ function App() {
           element={
             <>
               <AboutPage />
+            </>
+          }
+        />
+        <Route
+          path='/services'
+          element={
+            <>
+              <ServicesPage />
             </>
           }
         />

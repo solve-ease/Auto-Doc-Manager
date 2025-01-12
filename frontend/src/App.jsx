@@ -10,6 +10,8 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
+import ContactPage from './pages/ContactPage'
+import ScrollToTop from './components/ScrollToTop'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -58,6 +60,14 @@ function App() {
           }
         />
         <Route
+          path='/contact'
+          element={
+            <>
+              <ContactPage />
+            </>
+          }
+        />
+        <Route
           path='/upload'
           element={
             <>
@@ -83,6 +93,7 @@ function App() {
         />
       </Routes>
       <Footer />
+      <ScrollToTop />
     </BrowserRouter>
   )
 }

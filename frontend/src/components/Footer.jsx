@@ -73,7 +73,7 @@ const Footer = () => {
     <FooterContainer>
       <InfoSection>
         <InfoDiv>
-          <h3 className='font-large'>DockChecker</h3>
+          <h3 className='font-large'>Auto-Doc</h3>
           <p>
             Our platform is a groundbreaking initiative that enhances digital
             empowerment by providing secure access to authentic documents
@@ -88,26 +88,33 @@ const Footer = () => {
           <FooterLink href='/about'>About</FooterLink>
           <FooterLink href='/contact'>Contact</FooterLink>
           <FooterLink href='/verification'>Verification</FooterLink>
-          <FooterLink href='/help'>Help</FooterLink>
+          <FooterLink href='/services'>Services</FooterLink>
           <FooterLink href='/faqs'>FAQs</FooterLink>
         </LinksDiv>
         <ContactsDiv>
           <h3>Contact Us</h3>
           <ContactItem>
             <span className='material-symbols-outlined'>mail</span>
-            <span>solve-ease@google.com</span>
+            <span>solveeaseofficial@gmail.com</span>
           </ContactItem>
           <ContactItem>
             <span className='material-symbols-outlined'>call</span>
-            <span>+123 456 7890</span>
+            <span>+91 7275156652</span>
           </ContactItem>
           <ContactItem>
             <span className='material-symbols-outlined'>location_on</span>
-            <span>123 Main St, Anytown, USA</span>
+            <span>Keshav Mahavidyalaya (UOD), New-Delhi, 110034</span>
           </ContactItem>
         </ContactsDiv>
       </InfoSection>
       <SocialMediaSection>
+      <SocialMediaLink
+          href='https://github.com/solve-ease'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <i className='fa-brands fa-github'></i>
+        </SocialMediaLink>
         <SocialMediaLink
           href='https://www.instagram.com'
           target='_blank'
@@ -122,13 +129,7 @@ const Footer = () => {
         >
           <i className='fa-brands fa-twitter'></i>
         </SocialMediaLink>
-        <SocialMediaLink
-          href='https://github.com/solve-ease'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <i className='fa-brands fa-github'></i>
-        </SocialMediaLink>
+        
         <SocialMediaLink
           href='https://www.linkedin.com'
           target='_blank'

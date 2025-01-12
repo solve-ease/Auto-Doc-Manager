@@ -1,105 +1,104 @@
-# AI-Powered Blockchain Document Verification Platform
+# Auto-Doc : Document Verification using Blockchain and AI
 
-This project implements a comprehensive document verification platform using AI, blockchain technology, and a user-friendly web interface. The system aims to streamline the process of generating, verifying, and accessing essential documents for official purposes.
+![Project Banner](https://via.placeholder.com/1200x400.png?text=Document+Verification+Platform) <!-- Add a banner image if available -->
 
 ## Table of Contents
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Technologies Used](#technologies-used)
+4. [Architecture](#architecture)
+5. [Installation](#installation)
+6. [Usage](#usage)
+10. [License](#license)
+11. [Acknowledgements](#acknowledgements)
 
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Process Flow](#process-flow)
-- [Contributing](#contributing)
-- [License](#license)
+---
+
+## Introduction
+
+The **Document Verification Platform** is a decentralized solution designed to automate and secure the process of document verification using **blockchain technology** and **artificial intelligence (AI)**. This platform addresses the inefficiencies and vulnerabilities of traditional manual verification processes by providing a tamper-proof, transparent, and user-friendly system for issuing, verifying, and accessing official documents.
+
+### Key Problems Solved
+- **Time-Consuming Manual Verification**: Automates the verification process, reducing time and effort.
+- **Fraud and Tampering**: Ensures document integrity using blockchain's immutability.
+- **Lack of Interoperability**: Uses **W3C Verifiable Credentials** for global compatibility.
+- **Privacy Concerns**: Implements **Zero-Knowledge Proofs (ZKPs)** for selective disclosure of document attributes.
+
+---
 
 ## Features
 
-- Secure document generation and storage using blockchain technology
-- AI-powered document verification
-- User-friendly portal for issuing authorities, verifying authorities, and individuals
-- Tamper-proof authenticity of digital certificates
-- Efficient document validation against predefined criteria
+- **Document Issuance**: Issuing authorities (e.g., universities, employers) can create and issue digital documents.
+- **Document Verification**: Verifying authorities (e.g., banks, government offices) can validate documents using AI and blockchain.
+- **User Portal**: Individuals can view and share their documents securely.
+- **AI-Powered Fraud Detection**: Detects forged documents or anomalies in real-time.
+- **Zero-Knowledge Proofs (ZKPs)**: Allows users to prove specific attributes (e.g., age, degree) without revealing the entire document.
+- **Cross-Chain Compatibility**: Enables verification of credentials across multiple blockchains using Avalanche's **Interchain Messaging**.
+- **IPFS Storage**: Stores documents securely on the InterPlanetary File System (IPFS).
 
-## Technology Stack
+---
 
-- Frontend: React.js
-- Backend: Node.js with Express.js
-- Blockchain: Ethereum (Solidity smart contracts)
-- Development Environment: Hardhat
-- Blockchain Interaction: ethers.js
-- Database: MongoDB (for off-chain data storage)
+## Technologies Used
 
-## Project Structure
+### Frontend
+- **React.js**: For building the user interface.
+- **TailwindCSS**: For styling the components.
+- **Web3.js**: For interacting with the Avalanche blockchain.
 
-The project is divided into three main parts:
+### Backend
+- **Node.js**: For building the backend server.
+- **Express.js**: For creating RESTful APIs.
+- **Python**: For AI-powered fraud detection (TensorFlow/OpenCV).
 
-1. `frontend/`: React.js application for the user interface
-2. `backend/`: Node.js and Express.js server for API endpoints and business logic
-3. `blockchain/`: Solidity smart contracts and Hardhat configuration
+### Blockchain
+- **Avalanche Fuji Testnet**: For deploying smart contracts.
+- **AvalancheJS**: For interacting with the Avalanche blockchain.
+- **Hardhat**: For smart contract development and deployment.
+- **IPFS**: For decentralized document storage.
 
-## Getting Started
+### Zero-Knowledge Proofs (ZKPs)
+- **Circom**: For designing ZKP circuits.
+- **SnarkJS**: For generating and verifying proofs.
 
+---
+
+## Architecture
+
+![Architecture Diagram](https://via.placeholder.com/800x400.png?text=Architecture+Diagram) <!-- Add an architecture diagram if available -->
+
+The platform consists of three main components:
+1. **Frontend**: A React-based web portal for issuing authorities, verifying authorities, and individuals.
+2. **Backend**: A Node.js server with RESTful APIs for document issuance, verification, and ZKP generation.
+3. **Blockchain**: Smart contracts deployed on Avalanche Fuji Testnet for storing document hashes and verifying credentials.
+
+---
+
+## Installation
+
+### Prerequisites
+- Node.js (v16 or higher)
+- Python (v3.8 or higher)
+- MetaMask or Avalanche Wallet (for blockchain interaction)
+- Hardhat (for smart contract deployment)
+
+### Steps
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/your-username/document-verification-platform.git
-    cd document-verification-platform
+   ```bash
+   git clone https://github.com/solve-ease/Auto-Doc-Manager.git
+   cd Auto-Doc-Manager
     ```
-2. Set up the frontend:
-    ```bash
-    cd frontend
-    npm install
-    npm start
-    ```
-3. Set up the backend:
-    ```bash
-    cd backend
-    npm install
-    npm start
-    ```
-4. Set up and deploy smart contracts:
-    ```bash
-    cd blockchain
-    yarn install
-    yarn hardhat compile
-    yarn hardhat test
-    yarn hardhat run scripts/deploy.js --network <your-network>
-    ```
-For detailed instructions on setting up and running each component, please refer to the README files in their respective directories.
 
-## Process Flow
-
-1. **Document Generation**
-- Issuing authorities log in to the platform
-- They create digital certificates for individuals
-- The certificates are stored on the blockchain with a unique hash
-
-2. **Document Storage**
-- The platform stores the document hash and metadata on the blockchain
-- Off-chain document data is securely stored in the database
-
-3. **User Access**
-- Individuals can log in to view their documents
-- They can share document access with verifying authorities
-
-4. **Document Verification**
-- Verifying authorities receive document access requests
-- They can view and verify documents using AI-powered algorithms
-- The system checks the document hash against the blockchain for authenticity
-
-5. **Blockchain Verification**
-- Smart contracts manage document hashes and access controls
-- Every verification is recorded on the blockchain for auditing purposes
-
-## Contributing
-
-We welcome contributions to improve the document verification platform. Please follow these steps to contribute:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/your-feature-name`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin feature/your-feature-name`)
-5. Create a new Pull Request
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT LICENSE . See the [LICENSE](https://github.com/solve-ease/Auto-Doc-Manager/blob/main/LICENSE) file for details.
+
+## Acknowledgements
+
+   - Avalanche: For providing the blockchain infrastructure.
+
+   - IPFS: For decentralized document storage.
+
+   - Circom and SnarkJS: For zero-knowledge proof integration.
+
+   - TensorFlow/OpenCV: For AI-powered fraud detection.

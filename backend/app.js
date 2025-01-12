@@ -8,7 +8,7 @@ const uploadRoute = require('./src/routes/uploadDoc')
 const port = process.env.PORT || 3000
 
 app.use(express.json())
-app.use(cors({ origin: 'http://localhost:5173' }))
+app.use(cors({ origin: 'https://auto-doc-backend.vercel.app' }))
 
 app.use('/auth', authRoutes)
 app.use('/api', uploadRoute)

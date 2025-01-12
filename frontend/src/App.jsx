@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import Footer from './components/Footer'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import AboutPage from './pages/AboutPage'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -36,6 +37,14 @@ function App() {
           element={
             <>
               <Home />
+            </>
+          }
+        />
+        <Route
+          path='/about'
+          element={
+            <>
+              <AboutPage />
             </>
           }
         />

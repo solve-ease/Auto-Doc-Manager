@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
+import ContactPage from './pages/ContactPage'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -54,6 +55,14 @@ function App() {
           element={
             <>
               <ServicesPage />
+            </>
+          }
+        />
+        <Route
+          path='/contact'
+          element={
+            <>
+              <ContactPage />
             </>
           }
         />

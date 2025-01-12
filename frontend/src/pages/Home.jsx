@@ -158,7 +158,7 @@ const Home = () => {
       <Hero>
         <HeroH1 className='font-ex-large font-bold'>
           Experience the Future of Secure Document Storage with{' '}
-          <span className='color-primary '>DockChecker</span>
+          <span className='color-primary '>Auto-Doc</span>
         </HeroH1>
         <h3 className='font-mid-medium'>
           Issue Verify and Store with Confidence

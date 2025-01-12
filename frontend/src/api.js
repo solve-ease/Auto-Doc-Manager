@@ -1,4 +1,7 @@
-const API_BASE_URL = 'http://127.0.0.1:5000/api'
+// const API_BASE_URL = 'http://127.0.0.1:5000/api'
+
+// production only
+const API_BASE_URL = 'https://auto-doc-backend.vercel.app/api'
 
 export const register = async (userData) => {
   console.log('userData : ')

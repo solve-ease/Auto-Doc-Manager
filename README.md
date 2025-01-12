@@ -1,6 +1,6 @@
-# Auto-Doc : Document Verification using Blockchain and AI
+# Auto-Doc: Document Verification using Blockchain and AI
 
-![Project Banner](https://via.placeholder.com/1200x400.png?text=Document+Verification+Platform) <!-- Add a banner image if available -->
+![Project Banner](https://github.com/user-attachments/assets/26be3957-d830-4768-96df-2e6e5d8804e0)
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -63,8 +63,8 @@ The **Document Verification Platform** is a decentralized solution designed to a
 ---
 
 ## Architecture
+![auto-doc-arch-iitkgp](https://github.com/user-attachments/assets/05661bbf-9ca9-4a30-8238-6a870e4d4148)
 
-![Architecture Diagram](https://via.placeholder.com/800x400.png?text=Architecture+Diagram) <!-- Add an architecture diagram if available -->
 
 The platform consists of three main components:
 1. **Frontend**: A React-based web portal for issuing authorities, verifying authorities, and individuals.

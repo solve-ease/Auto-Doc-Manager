@@ -129,10 +129,10 @@ const Navbar = ({ lang, setLang, setDefaultSize }) => {
           </span>
         </LogoDiv>
         <NavLinks>
-          <NavLink href='#home'>Home</NavLink>
-          <NavLink href='#about'>About</NavLink>
-          <NavLink href='#services'>Services</NavLink>
-          <NavLink href='#contact'>Contact</NavLink>
+          <NavLink href='/'>Home</NavLink>
+          <NavLink href='/about'>About</NavLink>
+          <NavLink href='/services'>Services</NavLink>
+          <NavLink href='/contact'>Contact</NavLink>
         </NavLinks>
         <AuthLinks>
           <RegisterBtn

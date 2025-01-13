@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Logo from '../assets/img/logo.png'
 import indianFlag from '../assets/img/indian-flag.png'
 import { useNavigate } from 'react-router-dom'
+import { logout } from '../api'
 
 const GoiNavbar = styled.div`
   display: flex;
@@ -81,11 +82,17 @@ const LoginBtn = styled.button``
 
 const RegisterBtn = styled.button``
 
-const Navbar = ({ lang, setLang, setDefaultSize }) => {
+const Navbar = ({
+  lang,
+  setLang,
+  setDefaultSize,
+  isAuthenticated,
+  setIsAuthenticated
+}) => {
   const navigate = useNavigate()
   return (
     <>
-      <GoiNavbar>
+      {/* <GoiNavbar>
         <GoiLogo>
           <GoiImg src={indianFlag} alt='national Amblem' />
           <GoiText>Government of India</GoiText>
@@ -120,7 +127,7 @@ const Navbar = ({ lang, setLang, setDefaultSize }) => {
             <CurrentLang>{lang}</CurrentLang>
           </LangBtn>
         </GoiOptions>
-      </GoiNavbar>
+      </GoiNavbar> */}
       <Nav>
         <LogoDiv>
           <NavLogo src={Logo} />
@@ -134,25 +141,49 @@ const Navbar = ({ lang, setLang, setDefaultSize }) => {
           <NavLink href='#services'>Services</NavLink>
           <NavLink href='#contact'>Contact</NavLink>
         </NavLinks>
-        <AuthLinks>
-          <RegisterBtn
-            className='btn'
-            onClick={() => {
-              navigate('/register')
-            }}
-          >
-            Register
-          </RegisterBtn>
-          |
-          <LoginBtn
-            className='btn-outlined'
-            onClick={() => {
-              navigate('/login')
-            }}
-          >
-            Login
-          </LoginBtn>
-        </AuthLinks>
+        {isAuthenticated && (
+          <AuthLinks>
+            <NavLink
+              className='btn'
+              onClick={() => {
+                navigate('/dashboard')
+              }}
+            >
+              Dashboard
+            </NavLink>
+            <NavLink
+              className='btn-outlined'
+              onClick={() => {
+                logout()
+                setIsAuthenticated(false)
+                navigate('/login')
+              }}
+            >
+              Logout
+            </NavLink>
+          </AuthLinks>
+        )}
+        {!isAuthenticated && (
+          <AuthLinks>
+            <RegisterBtn
+              className='btn'
+              onClick={() => {
+                navigate('/register')
+              }}
+            >
+              Register
+            </RegisterBtn>
+            |
+            <LoginBtn
+              className='btn-outlined'
+              onClick={() => {
+                navigate('/login')
+              }}
+            >
+              Login
+            </LoginBtn>
+          </AuthLinks>
+        )}
       </Nav>
     </>
   )

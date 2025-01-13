@@ -16,14 +16,19 @@ const arrayBufferToBase64 = (buffer) => {
 const getDoc = async (req, res) => {
   try {
     const docData = req.body
+    let dbData
     if (docData) {
       //getting data from ipfs and db by iterating over the array
       const filePromises = docData.map(async (doc) => {
         const ipfsData = await pinata.gateways.get(doc.cid)
-        const dbData = await prisma.document.findUnique({
-          where: { id: parseInt(doc.dbId) }
-        })
+        dbData =
+          doc.dbId === 'undefined'
+            ? ''
+            : await prisma.document.findUnique({
+                where: { id: parseInt(doc.dbId) }
+              })
         // Convert Blob to ArrayBuffer
+        console.log('ipfsData', ipfsData)
         const arrayBuffer = await ipfsData.data.arrayBuffer()
 
         // Calculate original size

@@ -1,15 +1,15 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import { createGlobalStyle } from 'styled-components'
-import UploadDoc from './pages/UploadDoc'
 import Navbar from './components/Navbar'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Home from './pages/Home'
 import Footer from './components/Footer'
 import LoginPage from './pages/LoginPage'
-import IssueDoc from './pages/IssueDoc'
-import Docs from './pages/Docs'
 import Register from './pages/Register'
+import Dashboard from './pages/Dashboard'
+import { updateAbilityFor } from './utils/defineAbility'
+import { checkToken } from './utils/checkTokens'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -25,13 +25,50 @@ const GlobalStyle = createGlobalStyle`
 `
 
 function App() {
+  const [ability, setAbility] = useState(null)
   const [defaultSize, setDefaultSize] = useState(16)
   const [lang, setLang] = useState('en')
+  const [user, setUser] = useState({ role: null }) // Replace with actual user data
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await checkToken()
+        if (userData) {
+          setUser(userData)
+          setIsAuthenticated(true)
+        } else {
+          setIsAuthenticated(false)
+        }
+      } catch (error) {
+        console.error('Error checking token:', error)
+        setIsAuthenticated(false)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchUserData()
+  }, [])
+
+  useEffect(() => {
+    setAbility(updateAbilityFor(user))
+  }, [user])
+  if (loading) {
+    return <div>Loading...</div>
+  }
   return (
     <BrowserRouter>
       <GlobalStyle defaultSize={defaultSize} />
-      <Navbar lang={lang} setLang={setLang} setDefaultSize={setDefaultSize} />
+      <Navbar
+        lang={lang}
+        setLang={setLang}
+        setDefaultSize={setDefaultSize}
+        isAuthenticated={isAuthenticated}
+        setIsAuthenticated={setIsAuthenticated}
+      />
       <Routes>
         <Route
           path='/'
@@ -42,26 +79,25 @@ function App() {
           }
         />
         <Route
-          path='/upload'
+          path='/dashboard'
           element={
-            <>
-              <UploadDoc />
-            </>
-          }
-        />
-        <Route
-          path='/docs'
-          element={
-            <>
-              <Docs />
-            </>
+            isAuthenticated ? (
+              <Dashboard
+                user={user}
+                setUser={setUser}
+                ability={ability}
+                setAbility={setAbility}
+              />
+            ) : (
+              <Navigate to='/login' />
+            )
           }
         />
         <Route
           path='/login'
           element={
             <>
-              <LoginPage />
+              <LoginPage setIsAuthenticated={setIsAuthenticated} />
             </>
           }
         />
@@ -69,15 +105,10 @@ function App() {
           path='/register'
           element={
             <>
-              <Register />
-            </>
-          }
-        />
-        <Route
-          path='/issue'
-          element={
-            <>
-              <IssueDoc />
+              <Register
+                setUser={setUser}
+                setIsAuthenticated={setIsAuthenticated}
+              />
             </>
           }
         />

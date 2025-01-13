@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const session = require('express-session')
 const app = express()
 const cors = require('cors')
 const authRoutes = require('./src/routes/auth')
@@ -9,6 +10,15 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(cors({ origin: 'http://localhost:5173' }))
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET, // Replace with your own secret key
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+  })
+)
 
 app.use('/auth', authRoutes)
 app.use('/api', uploadRoute)

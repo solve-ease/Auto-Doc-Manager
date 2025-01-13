@@ -50,7 +50,7 @@ const Docs = () => {
       body: JSON.stringify(data)
     })
     const result = await response.json()
-
+    console.log('result', result)
     //inflating the document blob data
     result.forEach((doc) => {
       // Convert Base64 to ArrayBuffer
@@ -101,9 +101,10 @@ const Docs = () => {
       if (txn && txn.length) {
         const docData = []
         txn.forEach((result) => {
+          console.log(result)
           const doc = {
-            cid: result[0],
-            dbId: result[1]
+            cid: result[0] || null,
+            dbId: result[1] || null
           }
           docData.push(doc)
         })

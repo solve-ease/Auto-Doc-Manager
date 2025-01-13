@@ -5,7 +5,7 @@ import Button from '../components/Button.jsx'
 import Input from '../components/InputForm.jsx'
 import PasswordInput from '../components/PasswordInput.jsx'
 
-const LoginPage = () => {
+const LoginPage = ({ setIsAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -25,11 +25,18 @@ const LoginPage = () => {
     e.preventDefault()
     try {
       const response = await login(formData)
-      // Store the tokens in localStorage
-      localStorage.setItem('accessToken', response.access)
-      localStorage.setItem('refreshToken', response.refresh)
-      // Redirect to dashboard or home page
-      navigate('/docs')
+      if (response.ok) {
+        const data = await response.json()
+        const { accessToken, refreshToken } = data
+        // Store the tokens in localStorage
+        localStorage.setItem('accessToken', accessToken)
+        localStorage.setItem('refreshToken', refreshToken)
+        // Redirect to dashboard or home page
+        setIsAuthenticated(true)
+        navigate('/dashboard')
+      } else {
+        alert('Login failed')
+      }
     } catch (error) {
       setError(error.message)
     }

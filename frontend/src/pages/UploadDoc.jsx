@@ -120,7 +120,7 @@ const IssueDocumentForm = () => {
   }
 
   return (
-    <div className='max-w-md mx-auto my-10 p-6 bg-white rounded-lg shadow-xl'>
+    <div className='w-[30vw] mx-auto my-10 p-6 bg-white rounded-lg shadow-xl'>
       <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
         Issue Document
       </h2>

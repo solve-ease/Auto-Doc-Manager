@@ -1,3 +1,4 @@
+//no work of this module for now as contract interactions are done from frontend
 const fs = require('fs')
 const path = require('path')
 const { ethers } = require('ethers')

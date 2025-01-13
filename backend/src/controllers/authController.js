@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10
 const jwt = require('jsonwebtoken')
 const { supabase } = require('../utils/supabaseClient')
-const { prisma } = require('../utils/prismaClient')
+const prisma = require('../utils/prismaClient')
 
 const register = async (req, res) => {
   console.log('Request received')
@@ -16,58 +16,61 @@ const register = async (req, res) => {
     return res.status(400).json({ errors: errors.array() })
   }
 
-  const { email, password, firstName, lastName, role } = req.body
-
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    role,
+    addr,
+    phone,
+    gender,
+    username,
+    image,
+    dob
+  } = req.body
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(password, 10)
   try {
-    // Step 2: Create the user without sending a confirmation email
-    console.log('Creating user without sending a confirmation email')
-    const { data: user, error } = await supabase.auth.admin.createUser({
-      email: email,
-      password: password,
-      email_confirm: true // Mark the email as confirmed
-    })
-
-    // Step 3: Handle potential errors during user creation
-    if (error) {
-      console.log('Error during user creation:', error.message)
-      return res.status(400).json({ error: error.message })
-    }
-
     // Store user data
     console.log('Storing user data in the database')
     await prisma.user.create({
       data: {
         email: email,
+        userName: username,
         firstName: firstName,
         lastName: lastName,
-        role: role || 'user' // Default to 'user' if role not provided
+        role: role || 'user', // Default to 'user' if role not provided
+        gender: gender,
+        phone: phone,
+        image: image,
+        dob: dob,
+        password: hashedPassword
       }
     })
 
-    // Step 4: Log the user in by creating a session
-    console.log('Logging in user')
-    const { data: session, error: loginError } =
-      await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-      })
-
-    if (loginError) {
-      console.log('Error during login:', loginError.message)
-      return res.status(400).json({ error: loginError.message })
-    }
-    const { access_token, refresh_token } = session.session
+    // Generate tokens
+    const accessToken = jwt.sign(
+      { role: role, email: email },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '1h' }
+    )
+    const refreshToken = jwt.sign(
+      { role: role, email: email },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: '7d' }
+    )
     // Step 5: Return the tokens and user details to the client
     console.log('Returning tokens and user details to the client')
     return res.status(200).json({
       message: 'User registered and logged in successfully',
       user: {
-        id: user.id,
-        email: user.email
+        role: role,
+        email: email
       },
       tokens: {
-        access_token,
-        refresh_token
+        accessToken,
+        refreshToken
       }
     })
   } catch (err) {
@@ -78,6 +81,7 @@ const register = async (req, res) => {
 }
 
 let refreshTokens = []
+
 const login = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -102,12 +106,12 @@ const login = async (req, res) => {
     }
 
     const accessToken = jwt.sign(
-      { id: user.id, username: user.email },
+      { role: user.role, email: user.email },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '1h' }
     )
     const refreshToken = jwt.sign(
-      { id: user.id, username: user.email },
+      { role: user.role, email: user.email },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: '7d' }
     )
@@ -132,7 +136,7 @@ const token = (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '1h' }
     )
-    res.json({ accessToken })
+    res.json({ accessToken, user })
   })
 }
 

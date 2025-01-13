@@ -19,12 +19,16 @@
     "ethers": "^6.13.3",
     "framer-motion": "^11.17.0",
     "lucide-react": "^0.471.0",
+    "pako": "^2.1.0",
     "react": "^18.3.1",
     "react-countup": "^6.5.3",
+    "react-color": "^2.19.3",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
     "react-tsparticles": "^2.12.2",
-    "styled-components": "^6.1.12"
+    "react-spinners": "^0.14.1",
+    "styled-components": "^6.1.12",
+    "tailwind-scrollbar": "^3.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

@@ -11,10 +11,17 @@ datasource db {
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
+  userName  String   @default("")
   firstName String
   lastName  String
   role      String   @default("user")
+  phone     String   @default("")
+  gender    String   @default("")
+  image     String   @default("")
+  dob       Json     @default("{}")
+  walletAddr String  @default("")
   createdAt DateTime @default(now())
+  password  String   @default("")
 }
 model Document {
   id             Int      @id @default(autoincrement())
@@ -24,3 +31,10 @@ model Document {
   expiryAt       DateTime
   type           String
   }
+  model Otp {
+  id          Int      @id @default(autoincrement())
+  verifyWith  String   // Can be an email or a phone number
+  otp         String
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime
+}

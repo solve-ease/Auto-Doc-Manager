@@ -3,7 +3,6 @@ const fs = require('fs')
 const { Blob, File } = require('blob-polyfill')
 const path = require('path')
 const prisma = require('../utils/prismaClient')
-const { callIssueDocument } = require('./contractController')
 
 // Read the contractInfo.json file
 const contractInfoPath = path.join(__dirname, '../../config/contractInfo.json')

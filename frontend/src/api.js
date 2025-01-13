@@ -1,12 +1,8 @@
-// const API_BASE_URL = 'http://127.0.0.1:5000/api'
-
-// production only
-const API_BASE_URL = 'https://auto-doc-backend.vercel.app/api'
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
 export const register = async (userData) => {
-  console.log('userData : ')
-  console.log(userData)
-  const response = await fetch(`${API_BASE_URL}/register/`, {
+  const response = await fetch(`${API_BASE_URL}/auth/register/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -17,11 +13,11 @@ export const register = async (userData) => {
     const errorData = await response.json()
     throw new Error(errorData.detail || 'Registration failed')
   }
-  return response.json()
+  return response
 }
 
 export const login = async (credentials) => {
-  const response = await fetch(`${API_BASE_URL}/login/`, {
+  const response = await fetch(`${API_BASE_URL}/auth/login/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -32,10 +28,10 @@ export const login = async (credentials) => {
     const errorData = await response.json()
     throw new Error(errorData.detail || 'Login failed')
   }
-  return response.json()
+  return response
 }
 
-// You can also add a function to refresh the JWT token
+// You can also add a function to refresh the JWT token, not being used rn
 export const refreshToken = async (refreshToken) => {
   const response = await fetch(`${API_BASE_URL}/login/refresh/`, {
     method: 'POST',
@@ -72,4 +68,21 @@ export const getChatbotResponse = async (message) => {
     console.error('Error fetching chatbot response:', error)
     throw error
   }
+}
+export const logout = async () => {
+  // Optionally notify the server to invalidate the tokens
+  // const refreshToken = localStorage.getItem('refreshToken')
+  // if (refreshToken) {
+  //   await fetch('/api/logout', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ token: refreshToken })
+  //   });
+  // }
+
+  // Clear tokens from local storage
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
 }

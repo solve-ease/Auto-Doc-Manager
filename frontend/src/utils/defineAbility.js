@@ -1,21 +1,17 @@
-import { AbilityBuilder, PureAbility } from '@casl/ability'
-
-export const ability = new PureAbility()
+import { AbilityBuilder, createMongoAbility } from '@casl/ability'
 
 export function updateAbilityFor(user) {
-  const { can, cannot, build } = new AbilityBuilder(PureAbility)
+  const { can, cannot, build } = new AbilityBuilder(createMongoAbility)
 
   if (user.role === 'admin') {
     can('manage', 'all')
-  } else if (user.role === 'issuing-authority') {
+  } else if (user.role === 'issuer') {
     can('create', 'Document')
-    can('read', 'Document')
-  } else if (user.role === 'verifying-authority') {
+  } else if (user.role === 'verifier') {
     can('read', 'Document')
     can('verify', 'Document')
   } else {
     can('read', 'Document')
   }
-
-  ability.update(build())
+  return build()
 }

@@ -6,6 +6,8 @@ const checkPermissions = require('../middlewares/checkPermissions')
 const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
+const { sendOtp, verifyOtp } = require('../controllers/otpController')
+const checkToken = require('../middlewares/checkTokens')
 
 const router = express.Router()
 
@@ -27,6 +29,8 @@ router.post(
   ],
   register
 )
+router.post('/send-otp', sendOtp)
+router.post('/verify-otp', verifyOtp)
 
 router.post(
   '/login',
@@ -37,5 +41,8 @@ router.post(
   login
 )
 router.post('/token', token)
-
+// Protected route to check token validity
+router.get('/check-token', checkToken, (req, res) => {
+  res.json({ message: 'Token is valid', user: req.user })
+})
 module.exports = router

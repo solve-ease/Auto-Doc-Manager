@@ -14,7 +14,7 @@ const PasswordInput = ({
   const [showPassword, setShowPassword] = useState(false)
 
   return (
-    <div className='relative'>
+    <div className='relative flex items-center'>
       <input
         type={showPassword ? 'text' : 'password'}
         placeholder={placeholder}
@@ -22,7 +22,7 @@ const PasswordInput = ({
         value={value}
         onChange={onChange}
         required={required}
-        className={`w-full px-3 py-2 mt-6 border ${
+        className={`w-full px-3 py-2 my-6 border ${
           error ? 'border-red-500' : 'border-gray-300'
         } rounded focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10`}
       />

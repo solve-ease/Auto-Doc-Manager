@@ -5,7 +5,7 @@ async function main() {
             DocumentManagementModule,
         )
         const contractAddress = await documentManagement.getAddress()
-        console.log(`Apollo deployed to: ${contractAddress}`)
+        console.log(`Contract deployed to: ${contractAddress}`)
 
         // Verify the contract on Etherscan
 

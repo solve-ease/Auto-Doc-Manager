@@ -9,11 +9,11 @@ async function main() {
 
         // Verify the contract on Etherscan
 
-        await hre.run("verify:verify", {
-            address: contractAddress,
-            constructorArguments: [], // Add constructor arguments if any
-        })
-        console.log("Contract verified on Etherscan")
+        // await hre.run("verify:verify", {
+        //     address: contractAddress,
+        //     constructorArguments: [], // Add constructor arguments if any
+        // })
+        // console.log("Contract verified on Etherscan")
     } catch (error) {
         console.error(error)
     }

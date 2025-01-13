@@ -36,6 +36,7 @@ const Docs = () => {
       console.log('ABI:', contractInfo.abi)
       const contract = new ethers.Contract(address, abi, signer)
       console.log('contract fetch successfully')
+      console.log(contract)
       return contract
     } catch (e) {
       console.error(e)
@@ -84,6 +85,7 @@ const Docs = () => {
       if (signer && contractInfo && signerAddr) {
         const contract = await getContract(signer, contractInfo)
         if (contract) {
+          console.log('gettign user data')
           const tx = await contract.getUserDocuments(signerAddr)
           return tx
         }
@@ -112,6 +114,10 @@ const Docs = () => {
         const result = await getDocFromBackend(docData)
         setDocData(result)
         setLoading(false)
+      } else {
+        setLoading(false)
+        setError('No Documents found')
+        return null
       }
     } catch (e) {
       console.error(e)
@@ -125,6 +131,8 @@ const Docs = () => {
   }, [])
 
   useEffect(() => {
+    setLoading(true)
+    setError('')
     fetchDocs(signer, contractInfo, signerAddress)
   }, [signer])
   return docData.length > 0 ? (

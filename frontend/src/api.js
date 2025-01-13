@@ -1,4 +1,5 @@
-const API_BASE_URL = 'http://localhost:5000'
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
 export const register = async (userData) => {
   const response = await fetch(`${API_BASE_URL}/auth/register/`, {
@@ -30,7 +31,7 @@ export const login = async (credentials) => {
   return response
 }
 
-// You can also add a function to refresh the JWT token
+// You can also add a function to refresh the JWT token, not being used rn
 export const refreshToken = async (refreshToken) => {
   const response = await fetch(`${API_BASE_URL}/login/refresh/`, {
     method: 'POST',

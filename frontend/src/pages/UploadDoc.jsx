@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { ethers } from 'ethers'
 
+// const API_URL = "http://localhost:5000"
+
+// PRODUCTION ONLY
+const API_URL = "https://auto-doc-backend.vercel.app"
+
 const IssueDocumentForm = () => {
   const [issuedTo, setIssuedTo] = useState('')
   const [docType, setDocType] = useState('')
@@ -91,7 +96,7 @@ const IssueDocumentForm = () => {
     formData.append('file', file)
     console.log(formData)
     try {
-      const response = await fetch('http://localhost:5000/api/upload-doc', {
+      const response = await fetch( API_URL + '/api/upload-doc', {
         method: 'POST',
         body: formData
       })
@@ -204,3 +209,5 @@ const IssueDocumentForm = () => {
 }
 
 export default IssueDocumentForm
+
+

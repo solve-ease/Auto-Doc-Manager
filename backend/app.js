@@ -9,7 +9,11 @@ const getDocsRoute = require('./src/routes/getDoc')
 const port = process.env.PORT || 3000
 
 app.use(express.json())
-app.use(cors({ origin: 'http://localhost:5173' }))
+const allowedOrigins = [
+  'https://auto-doc-seven.vercel.app',
+  'http://localhost:5173'
+]
+app.use(cors({ origin: allowedOrigins }))
 
 app.use(
   session({

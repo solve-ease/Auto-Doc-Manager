@@ -10,6 +10,10 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import { updateAbilityFor } from './utils/defineAbility'
 import { checkToken } from './utils/checkTokens'
+import AboutPage from './pages/AboutPage'
+import ServicesPage from './pages/ServicesPage'
+import ContactPage from './pages/ContactPage'
+import ScrollToTop from './components/ScrollToTop'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -79,6 +83,30 @@ function App() {
           }
         />
         <Route
+          path='/about'
+          element={
+            <>
+              <AboutPage />
+            </>
+          }
+        />
+        <Route
+          path='/services'
+          element={
+            <>
+              <ServicesPage />
+            </>
+          }
+        />
+        <Route
+          path='/contact'
+          element={
+            <>
+              <ContactPage />
+            </>
+          }
+        />
+        <Route
           path='/dashboard'
           element={
             isAuthenticated ? (
@@ -114,6 +142,7 @@ function App() {
         />
       </Routes>
       <Footer />
+      <ScrollToTop />
     </BrowserRouter>
   )
 }

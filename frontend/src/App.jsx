@@ -12,6 +12,7 @@ import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
 import ContactPage from './pages/ContactPage'
 import ScrollToTop from './components/ScrollToTop'
+import Chatbot from './components/Chatbot'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -93,6 +94,7 @@ function App() {
         />
       </Routes>
       <Footer />
+      <Chatbot />
       <ScrollToTop />
     </BrowserRouter>
   )

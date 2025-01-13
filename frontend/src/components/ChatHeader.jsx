@@ -5,7 +5,7 @@ import autoDocLogo from "../assets/img/autodoc-logo.png";
 const ChatHeader = ({ activeTab, setActiveTab }) => {
   return (
     <motion.div
-      className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-t-lg flex justify-between items-center"
+      className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 rounded-t-lg flex justify-between items-center"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

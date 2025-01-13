@@ -4,7 +4,7 @@ import { Home, MessageCircle } from "lucide-react";
 const ChatFooter = ({ activeTab, setActiveTab }) => {
   return (
     <motion.div
-      className="bg-white p-4 border-t border-gray-200 flex justify-around"
+      className="bg-white p-2 border-t border-gray-200 flex justify-around"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

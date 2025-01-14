@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "build": "prisma generate",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +15,7 @@
   "dependencies": {
     "@casl/ability": "^6.7.1",
     "@casl/mongoose": "^8.0.2",
-    "@prisma/client": "^5.19.1",
+    "@prisma/client": "^6.2.1",
     "@supabase/supabase-js": "^2.45.4",
     "bcrypt": "^5.1.1",
     "blob-polyfill": "^9.0.20240710",
@@ -35,6 +38,6 @@
     "tesseract.js": "^5.1.1"
   },
   "devDependencies": {
-    "prisma": "^5.19.1"
+    "prisma": "^6.2.1"
   }
 }

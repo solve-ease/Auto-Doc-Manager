@@ -11,6 +11,10 @@ import metamaskIcon from '../assets/img//metamask-icon.svg'
 import PropTypes from 'prop-types'
 import { ethers } from 'ethers'
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
+
+
 const Register = ({ setUser }) => {
   const [formData, setFormData] = useState({
     email: '',
@@ -128,7 +132,7 @@ const Register = ({ setUser }) => {
         optedMethod,
         [optedMethod]: formData[optedMethod]
       }
-      const response = await fetch('http://localhost:5000/auth/send-otp', {
+      const response = await fetch(API_BASE_URL + '/auth/send-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -147,7 +151,7 @@ const Register = ({ setUser }) => {
   }
   const verifyOtp = async (e) => {
     try {
-      const response = await fetch('http://localhost:5000/auth/verify-otp', {
+      const response = await fetch( API_BASE_URL + '/auth/verify-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

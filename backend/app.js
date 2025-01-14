@@ -13,17 +13,31 @@ const allowedOrigins = [
   'https://auto-doc-seven.vercel.app',
   'http://localhost:5173'
 ]
-app.use(cors({ origin: allowedOrigins }))
+// app.use(cors({ origin: allowedOrigins }))
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET, // Replace with your own secret key
+    secret: process.env.SESSION_SECRET || 'fallback-session-secret', // Replace with your own secret key
     resave: false,
     saveUninitialized: true,
     cookie: { secure: true } // Set to true if using HTTPS
   })
 )
 
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+
+  })
+)
+
+
+// Basic health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' })
+})
 app.use('/auth', authRoutes)
 app.use('/api', uploadRoute)
 app.use('/protected', getDocsRoute)

@@ -82,6 +82,8 @@ const Docs = () => {
   const handleTxn = async (signer, contractInfo, signerAddr) => {
     try {
       if (signer && contractInfo && signerAddr) {
+        console.log('signer:', signer)
+        console.log('signerAddr:', signerAddr)
         const contract = await getContract(signer, contractInfo)
         if (contract) {
           const tx = await contract.getUserDocuments(signerAddr)

@@ -16,7 +16,7 @@
 
 ## Introduction
 
-The **Document Verification Platform** is a decentralized solution designed to automate and secure the process of document verification using **blockchain technology** and **artificial intelligence (AI)**. This platform addresses the inefficiencies and vulnerabilities of traditional manual verification processes by providing a tamper-proof, transparent, and user-friendly system for issuing, verifying, and accessing official documents.
+The **Auto-Doc** is a decentralized solution designed to automate and secure the process of document verification using **blockchain technology** and **artificial intelligence (AI)**. This platform addresses the inefficiencies and vulnerabilities of traditional manual verification processes by providing a tamper-proof, transparent, and user-friendly system for issuing, verifying, and accessing official documents.
 
 ### Key Problems Solved
 - **Time-Consuming Manual Verification**: Automates the verification process, reducing time and effort.

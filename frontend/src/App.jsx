@@ -15,6 +15,7 @@ import ServicesPage from './pages/ServicesPage'
 import ContactPage from './pages/ContactPage'
 import ScrollToTop from './components/ScrollToTop'
 import Chatbot from './components/Chatbot'
+import AdminDashboard from './components/AdminDashboard'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -138,6 +139,14 @@ function App() {
                 setUser={setUser}
                 setIsAuthenticated={setIsAuthenticated}
               />
+            </>
+          }
+        />
+        <Route
+          path='/admin-dashboard'
+          element={
+            <>
+              <AdminDashboard />
             </>
           }
         />

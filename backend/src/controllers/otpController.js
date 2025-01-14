@@ -1,11 +1,15 @@
 const nodemailer = require('nodemailer')
 const prisma = require('../utils/prismaClient')
+require('dotenv').config();
+
+const googleEmail = process.env.GOOGLE_EMAIL
+
 let transporter
 try {
   transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'amanforwork1@gmail.com',
+      user: googleEmail,
       pass: process.env.GOOGLE_APP_PASSWORD // Use the environment variable for the app password
     }
   })
@@ -17,7 +21,7 @@ const phoneOtp = async (req, res) => {
 }
 const emailOtp = async (sendTo, otp) => {
   const mailOptions = {
-    from: 'amanforwork1@gmail.com',
+    from: googleEmail,
     to: sendTo,
     subject: 'Your OTP Code',
     text: `Your OTP code is ${otp}`

@@ -16,6 +16,7 @@ import ContactPage from './pages/ContactPage'
 import ScrollToTop from './components/ScrollToTop'
 import Chatbot from './components/Chatbot'
 import AdminDashboard from './components/AdminDashboard'
+import AlertExample from './components/Alert'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -37,6 +38,11 @@ function App() {
   const [user, setUser] = useState({ role: null }) // Replace with actual user data
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [alertState, setAlertState] = useState({
+    message: '',
+    type: 'success',
+    isVisible: false
+  })
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -65,6 +71,13 @@ function App() {
   if (loading) {
     return <div>Loading...</div>
   }
+  const showAlert = (message, type) => {
+    setAlertState({
+      message,
+      type,
+      isVisible: true
+    })
+  }
   return (
     <BrowserRouter>
       <GlobalStyle defaultSize={defaultSize} />
@@ -75,6 +88,7 @@ function App() {
         isAuthenticated={isAuthenticated}
         setIsAuthenticated={setIsAuthenticated}
       />
+      <AlertExample alertState={alertState} setAlertState={setAlertState} />
       <Routes>
         <Route
           path='/'
@@ -117,6 +131,7 @@ function App() {
                 setUser={setUser}
                 ability={ability}
                 setAbility={setAbility}
+                showAlert={showAlert}
               />
             ) : (
               <Navigate to='/login' />
@@ -127,7 +142,10 @@ function App() {
           path='/login'
           element={
             <>
-              <LoginPage setIsAuthenticated={setIsAuthenticated} />
+              <LoginPage
+                setIsAuthenticated={setIsAuthenticated}
+                showAlert={showAlert}
+              />
             </>
           }
         />
@@ -138,6 +156,7 @@ function App() {
               <Register
                 setUser={setUser}
                 setIsAuthenticated={setIsAuthenticated}
+                showAlert={showAlert}
               />
             </>
           }

@@ -5,14 +5,14 @@ import { updateAbilityFor } from '../utils/defineAbility'
 import { useEffect } from 'react'
 import { checkToken } from '../utils/checkTokens'
 import { useNavigate } from 'react-router-dom'
+import AdminDashboard from '../components/AdminDashboard'
 
-function Dashboard({ user, setUser, ability, setAbility }) {
+function Dashboard({ user, setUser, ability, setAbility, showAlert }) {
   const navigate = useNavigate()
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const userData = await checkToken()
-        console.log('userData:', userData)
         if (userData) {
           setUser(userData)
         } else {
@@ -33,12 +33,12 @@ function Dashboard({ user, setUser, ability, setAbility }) {
     }
   }, [user])
   return (
-    <div className='flex flex-col items-center justify-center'>
-      <h1 className='font-large my-5 font-mid-bold'>Dashboard</h1>
-      {ability && console.log(ability.can(('read', 'Document')))}
-      {ability && ability.can('read', 'Document') && <Docs />}
-      {ability && ability.can('create', 'Document') && <IssueDocumentForm />}
-    </div>
+    <>
+      {user.role === 'admin' && <AdminDashboard />}
+      {user.role === 'user' && <Docs />}
+      {user.role === 'issuer' && <IssueDocumentForm showAlert={showAlert} />}
+      {user.role === 'verifier' && <h1>Dashboard in creation</h1>}
+    </>
   )
 }
 

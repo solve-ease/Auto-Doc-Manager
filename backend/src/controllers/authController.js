@@ -136,7 +136,6 @@ const token = (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '1d' }
     )
-    console.log('user', user)
     res.json({ accessToken, user })
   })
 }

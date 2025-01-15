@@ -4,9 +4,9 @@ import { ethers } from 'ethers'
 // const API_URL = "http://localhost:5000"
 
 // PRODUCTION ONLY
-const API_URL = "https://auto-doc-backend.vercel.app"
+const API_URL = 'https://auto-doc-backend.vercel.app'
 
-const IssueDocumentForm = () => {
+const IssueDocumentForm = ({ showAlert }) => {
   const [issuedTo, setIssuedTo] = useState('')
   const [docType, setDocType] = useState('')
   const [signer, setSigner] = useState(null)
@@ -25,10 +25,11 @@ const IssueDocumentForm = () => {
         setSigner(signer)
         setIssuerAddress(IssuerAddr)
       } catch (error) {
+        'error'('Failed to connect wallet!', 'error')
         console.error('Failed to connect wallet:', error)
       }
     } else {
-      alert('Please install MetaMask!')
+      'error'('Please install MetaMask!', 'error')
     }
   }
 
@@ -75,15 +76,15 @@ const IssueDocumentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!file) {
-      alert('Please select a file first!')
+      showAlert('Please select a file first!', 'error')
       return
     }
     if (!issuedTo || !docType) {
-      alert('Please fill in all fields!')
+      showAlert('Please fill in all fields!', 'error')
       return
     }
     if (!signer || !issuerAddress) {
-      alert('Please connect wallet first!')
+      showAlert('Please connect wallet first!', 'error')
       return
     }
 
@@ -96,7 +97,7 @@ const IssueDocumentForm = () => {
     formData.append('file', file)
     console.log(formData)
     try {
-      const response = await fetch( API_URL + '/api/upload-doc', {
+      const response = await fetch(API_URL + '/api/upload-doc', {
         method: 'POST',
         body: formData
       })
@@ -209,5 +210,3 @@ const IssueDocumentForm = () => {
 }
 
 export default IssueDocumentForm
-
-

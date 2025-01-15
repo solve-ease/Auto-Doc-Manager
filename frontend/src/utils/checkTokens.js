@@ -17,6 +17,7 @@ export const checkToken = async () => {
 
     if (response.ok) {
       const data = await response.json()
+      console.log('Data:', data)
       return data.user
     } else if (response.status === 403) {
       // Token is expired, try to refresh it

@@ -14,8 +14,7 @@ import { ethers } from 'ethers'
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
-
-const Register = ({ setUser }) => {
+const Register = ({ setUser, showAlert }) => {
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -118,10 +117,11 @@ const Register = ({ setUser }) => {
           walletAddr: addr
         }))
       } catch (error) {
+        showAlert('Failed to connect wallet:', 'error')
         console.error('Failed to connect wallet:', error)
       }
     } else {
-      alert('Please install MetaMask!')
+      showAlert('Please install MetaMask!', 'error')
     }
   }
 
@@ -141,17 +141,18 @@ const Register = ({ setUser }) => {
       })
       if (response.ok) {
         setCodeSent(true)
-        alert('OTP sent successfully')
+        showAlert('OTP sent successfully', 'success')
       } else {
-        alert('Failed to send OTP')
+        showAlert('Failed to send OTP', 'error')
       }
     } catch (error) {
+      showAlert('Failed to send OTP:', 'error')
       console.error('Failed to send OTP:', error)
     }
   }
   const verifyOtp = async (e) => {
     try {
-      const response = await fetch( API_BASE_URL + '/auth/verify-otp', {
+      const response = await fetch(API_BASE_URL + '/auth/verify-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -162,12 +163,13 @@ const Register = ({ setUser }) => {
         })
       })
       if (response.ok) {
-        alert('OTP verified successfully')
+        showAlert('OTP verified successfully', 'success')
         handleSubmit(e)
       } else {
-        alert('Failed to verify OTP')
+        showAlert('Failed to verify OTP', 'error')
       }
     } catch (error) {
+      showAlert('Failed to verify OTP:', 'error')
       console.error('Failed to verify OTP:', error)
     }
   }

@@ -15,6 +15,7 @@ import ServicesPage from './pages/ServicesPage'
 import ContactPage from './pages/ContactPage'
 import ScrollToTop from './components/ScrollToTop'
 import Chatbot from './components/Chatbot'
+import { PacmanLoader } from 'react-spinners'
 import AdminDashboard from './components/AdminDashboard'
 import AlertExample from './components/Alert'
 
@@ -69,9 +70,21 @@ function App() {
     setAbility(updateAbilityFor(user))
   }, [user])
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div className="fixed inset-0 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm">
+        <div className="flex flex-col items-center gap-6">
+          <PacmanLoader
+            color="#4F46E5"
+            size={30}
+            margin={2}
+            speedMultiplier={1}
+          />
+          
+        </div>
+      </div>
+    );
   }
-  const showAlert = (message, type) => {
+    const showAlert = (message, type) => {
     setAlertState({
       message,
       type,

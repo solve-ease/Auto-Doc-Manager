@@ -7,7 +7,7 @@ const Team = () => {
     {
       name: "Aman Singh",
       role: "Web & Blockchain Development",
-      image: "/assets/adarsh-profile-circle.png",
+      image: "https://auto-doc-seven.vercel.app/as-pic.jpg",
       bio: "Expert in web and blockchain technology",
       social: {
         linkedin: "https://www.linkedin.com/in/adarsh-maurya-dev/",
@@ -18,7 +18,7 @@ const Team = () => {
     {
       name: "Adarsh Maurya",
       role: "Web & Blockchain Development",
-      image: "/assets/adarsh-profile-circle.png",
+      image: "https://auto-doc-seven.vercel.app/am-pic.png",
       bio: "Building Real world problem solving solutions leveraging Technology",
       social: {
         linkedin: "https://www.linkedin.com/in/adarsh-maurya-dev/",

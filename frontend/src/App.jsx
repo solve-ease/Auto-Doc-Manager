@@ -84,6 +84,13 @@ function App() {
       </div>
     );
   }
+    const showAlert = (message, type) => {
+    setAlertState({
+      message,
+      type,
+      isVisible: true
+    })
+  }
   return (
     <BrowserRouter>
       <GlobalStyle defaultSize={defaultSize} />

@@ -1,7 +1,6 @@
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
-
 export const checkToken = async () => {
   const accessToken = localStorage.getItem('accessToken')
   if (!accessToken) {
@@ -9,7 +8,7 @@ export const checkToken = async () => {
   }
 
   try {
-    const response = await fetch( API_BASE_URL + '/auth/check-token', {
+    const response = await fetch(API_BASE_URL + '/auth/check-token', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`
@@ -18,6 +17,7 @@ export const checkToken = async () => {
 
     if (response.ok) {
       const data = await response.json()
+      console.log('Data:', data)
       return data.user
     } else if (response.status === 403) {
       // Token is expired, try to refresh it
@@ -26,7 +26,7 @@ export const checkToken = async () => {
         return
       }
 
-      const refreshResponse = await fetch( API_BASE_URL + '/auth/token', {
+      const refreshResponse = await fetch(API_BASE_URL + '/auth/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

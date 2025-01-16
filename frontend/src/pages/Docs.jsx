@@ -4,6 +4,8 @@ import contractInfo from '../../config/contractInfo.json'
 import DocCard from '../components/DocCard'
 import pako from 'pako'
 import { HashLoader } from 'react-spinners'
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
 const Docs = () => {
   const [signer, setSigner] = useState(null)
@@ -42,7 +44,7 @@ const Docs = () => {
     }
   }
   const getDocFromBackend = async (data) => {
-    const response = await fetch('http://localhost:5000/protected/get-docs', {
+    const response = await fetch(`${API_BASE_URL}/protected/get-docs`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -82,6 +84,8 @@ const Docs = () => {
   const handleTxn = async (signer, contractInfo, signerAddr) => {
     try {
       if (signer && contractInfo && signerAddr) {
+        console.log('signer:', signer)
+        console.log('signerAddr:', signerAddr)
         const contract = await getContract(signer, contractInfo)
         if (contract) {
           const tx = await contract.getUserDocuments(signerAddr)

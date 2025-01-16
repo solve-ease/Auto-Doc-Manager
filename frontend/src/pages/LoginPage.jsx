@@ -5,7 +5,7 @@ import Button from '../components/Button.jsx'
 import Input from '../components/InputForm.jsx'
 import PasswordInput from '../components/PasswordInput.jsx'
 
-const LoginPage = ({ setIsAuthenticated }) => {
+const LoginPage = ({ setIsAuthenticated, showAlert }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -25,6 +25,8 @@ const LoginPage = ({ setIsAuthenticated }) => {
     e.preventDefault()
     try {
       const response = await login(formData)
+      const resStatus = response.status
+      console.log(resStatus)
       if (response.ok) {
         const data = await response.json()
         const { accessToken, refreshToken } = data
@@ -33,12 +35,21 @@ const LoginPage = ({ setIsAuthenticated }) => {
         localStorage.setItem('refreshToken', refreshToken)
         // Redirect to dashboard or home page
         setIsAuthenticated(true)
+        showAlert('Login successful', 'success')
         navigate('/dashboard')
+      } else if (response.status === 400) {
+        showAlert('Login Failed : Incorrect Credentials', 'error')
+      } else if (response.status === 500) {
+        showAlert('Please try after a few minutes', 'error')
       } else {
-        alert('Login failed')
+        showAlert('Login Failed', 'error')
       }
     } catch (error) {
-      setError(error.message)
+      showAlert(
+        'An unexpected error occurred. Please try again later.',
+        'error'
+      )
+      console.error('Login error:', error)
     }
   }
 

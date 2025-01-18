@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { checkToken } from '../utils/checkTokens'
 import { useNavigate } from 'react-router-dom'
 import AdminDashboard from '../components/AdminDashboard'
+import VerifierDashboard from '../components/VerifierDashboard'
 
 function Dashboard({ user, setUser, ability, setAbility, showAlert }) {
   const navigate = useNavigate()
@@ -37,7 +38,7 @@ function Dashboard({ user, setUser, ability, setAbility, showAlert }) {
       {user.role === 'admin' && <AdminDashboard />}
       {user.role === 'user' && <Docs />}
       {user.role === 'issuer' && <IssueDocumentForm showAlert={showAlert} />}
-      {user.role === 'verifier' && <h1>Dashboard in creation</h1>}
+      {user.role === 'verifier' && <VerifierDashboard />}
     </>
   )
 }

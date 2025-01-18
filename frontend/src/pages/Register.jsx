@@ -98,6 +98,8 @@ const Register = ({ setUser, showAlert }) => {
           setTimeout(() => {
             navigate('/dashboard')
           }, 5000)
+        } else {
+          console.log('request was not successfull', response.status)
         }
       } catch (error) {
         setErrors({ general: error.message })
@@ -885,7 +887,7 @@ const Register = ({ setUser, showAlert }) => {
                   />
                   <Input
                     type='text'
-                    name='Name'
+                    name='firstName'
                     placeholder='Name'
                     value={formData.firstName}
                     onChange={handleChange}
@@ -894,12 +896,12 @@ const Register = ({ setUser, showAlert }) => {
                   />
                   <Input
                     type='text'
-                    name='Name'
+                    name='lastName'
                     placeholder='Parent Organsiation (optional)'
-                    value={formData.firstName}
+                    value={formData.lastName}
                     onChange={handleChange}
                     required
-                    error={errors.firstName}
+                    error={errors.lastName}
                   />
                   <Input
                     type='text'
@@ -912,12 +914,12 @@ const Register = ({ setUser, showAlert }) => {
                   />
                   <Input
                     type='text'
-                    name='address'
+                    name='phone'
                     placeholder='Phone no.'
-                    value={formData.address}
+                    value={formData.phone}
                     onChange={handleChange}
                     required
-                    error={errors.address}
+                    error={errors.phone}
                   />
                 </div>
 

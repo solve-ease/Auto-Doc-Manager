@@ -86,3 +86,24 @@ export const logout = async () => {
   localStorage.removeItem('accessToken')
   localStorage.removeItem('refreshToken')
 }
+export const generateProof = async (data) => {
+  const response = await fetch(`${API_BASE_URL}/protected/generate-proof`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: data
+  })
+  return response
+}
+export const verifyProof = async (data) => {
+  console.log(data)
+  const response = await fetch(`${API_BASE_URL}/protected/verify-proof`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  return response
+}

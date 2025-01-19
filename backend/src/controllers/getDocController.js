@@ -21,6 +21,7 @@ const getDoc = async (req, res) => {
     if (docData) {
       //getting data from ipfs and db by iterating over the array
       const filePromises = docData.map(async (doc) => {
+        let dbData = ''
         if (docId) {
           if (doc.dbId === docId) {
             console.log('docId:', docId)

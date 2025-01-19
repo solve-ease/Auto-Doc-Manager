@@ -84,7 +84,7 @@ const AlertExample = ({ alertState, setAlertState }) => {
           ...prev,
           isVisible: false
         }))
-      }, 10000)
+      }, 5000)
     }
     return () => clearTimeout(timer)
   }, [alertState.isVisible])

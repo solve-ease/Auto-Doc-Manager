@@ -18,6 +18,9 @@ import Chatbot from './components/Chatbot'
 import { PacmanLoader } from 'react-spinners'
 import AdminDashboard from './components/AdminDashboard'
 import AlertExample from './components/Alert'
+import GenerateProof from './components/GenerateProof'
+import VerifyProof from './components/VerifyProof'
+import IssueDoc from './pages/IssueDoc'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -33,7 +36,7 @@ const GlobalStyle = createGlobalStyle`
 `
 
 function App() {
-  const [ability, setAbility] = useState(null)
+  const [ability, setAbility] = useState({ undefined })
   const [defaultSize, setDefaultSize] = useState(16)
   const [lang, setLang] = useState('en')
   const [user, setUser] = useState({ role: null }) // Replace with actual user data
@@ -71,20 +74,19 @@ function App() {
   }, [user])
   if (loading) {
     return (
-      <div className="fixed inset-0 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm">
-        <div className="flex flex-col items-center gap-6">
+      <div className='fixed inset-0 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm'>
+        <div className='flex flex-col items-center gap-6'>
           <PacmanLoader
-            color="#4F46E5"
+            color='#4F46E5'
             size={30}
             margin={2}
             speedMultiplier={1}
           />
-          
         </div>
       </div>
-    );
+    )
   }
-    const showAlert = (message, type) => {
+  const showAlert = (message, type) => {
     setAlertState({
       message,
       type,
@@ -175,10 +177,26 @@ function App() {
           }
         />
         <Route
-          path='/admin-dashboard'
+          path='/generate-proof'
           element={
             <>
-              <AdminDashboard />
+              <GenerateProof showAlert={showAlert} />
+            </>
+          }
+        />
+        <Route
+          path='/verify-proof'
+          element={
+            <>
+              <VerifyProof showAlert={showAlert} />
+            </>
+          }
+        />
+        <Route
+          path='/issue-doc'
+          element={
+            <>
+              <IssueDoc />
             </>
           }
         />

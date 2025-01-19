@@ -6,8 +6,11 @@ import pako from 'pako'
 import { HashLoader } from 'react-spinners'
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5173'
+const SECRET_KEY = import.meta.env.VITE_SECRET_KEY
+import CryptoJS from 'crypto-js'
 
-const Docs = () => {
+const Docs = ({ showAlert }) => {
   const [signer, setSigner] = useState(null)
   const [signerAddress, setSignerAddress] = useState('')
   const [docData, setDocData] = useState([])
@@ -43,13 +46,13 @@ const Docs = () => {
       console.error(e)
     }
   }
-  const getDocFromBackend = async (data) => {
+  const getDocFromBackend = async (docData) => {
     const response = await fetch(`${API_BASE_URL}/protected/get-docs`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({ docData })
     })
     const result = await response.json()
     console.log('result', result)
@@ -67,8 +70,28 @@ const Docs = () => {
       const url = URL.createObjectURL(blob)
       doc.ipfsData.url = url
     })
-    console.log(result)
     return result
+  }
+  const generateDocUrl = (id) => {
+    if (id) {
+      console.log('id:', id)
+      const idString = id.toString()
+      // Encrypt the user address and document name
+      const encryptedUserAddress = CryptoJS.AES.encrypt(
+        signerAddress,
+        SECRET_KEY
+      ).toString()
+      const encryptedDocId = CryptoJS.AES.encrypt(
+        idString,
+        SECRET_KEY
+      ).toString()
+      // Generate the shareable link with encrypted query parameters
+      const shareableLink = `${API_URL}/shared-doc?userAddress=${encodeURIComponent(
+        encryptedUserAddress
+      )}&id=${encodeURIComponent(encryptedDocId)}`
+      return shareableLink
+    }
+    return null
   }
   // Utility function to convert Base64 to ArrayBuffer
   const base64ToArrayBuffer = (base64) => {
@@ -114,6 +137,7 @@ const Docs = () => {
         })
         console.log(docData)
         const result = await getDocFromBackend(docData)
+        console.log(result)
         setDocData(result)
         setLoading(false)
       }
@@ -141,6 +165,9 @@ const Docs = () => {
               key={index}
               docUrl={doc.ipfsData.url}
               docName={doc.dbData.type}
+              generateDocUrl={generateDocUrl}
+              showAlert={showAlert}
+              dbId={doc.dbData.id}
             />
           )
         })}

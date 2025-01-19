@@ -21,6 +21,7 @@ import AlertExample from './components/Alert'
 import GenerateProof from './components/GenerateProof'
 import VerifyProof from './components/VerifyProof'
 import IssueDoc from './pages/IssueDoc'
+import VerifierViewDoc from './components/VerifierViewDoc'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -197,6 +198,14 @@ function App() {
           element={
             <>
               <IssueDoc />
+            </>
+          }
+        />
+        <Route
+          path='/shared-doc'
+          element={
+            <>
+              <VerifierViewDoc />
             </>
           }
         />

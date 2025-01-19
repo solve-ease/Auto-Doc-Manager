@@ -1,6 +1,6 @@
-import { FileIcon, MoreVertical, Clock } from 'lucide-react'
+import { FileIcon, MoreVertical, Clock, Link } from 'lucide-react'
 
-const DocCard = ({ docName, docUrl }) => {
+const DocCard = ({ docName, docUrl, generateDocUrl, showAlert, dbId }) => {
   return (
     <div className='w-80 bg-white rounded-lg shadow-lg overflow-hidden p-3 flex flex-col gap-2'>
       {/* Header */}
@@ -13,8 +13,19 @@ const DocCard = ({ docName, docUrl }) => {
             {docName}
           </span>
         </div>
-        <button className='text-gray-400 hover:text-gray-600'>
-          <MoreVertical className='h-5 w-5' />
+        <button
+          onClick={() => {
+            const sharableUrl = generateDocUrl(dbId)
+            if (sharableUrl) {
+              navigator.clipboard.writeText(sharableUrl)
+              showAlert('Link copied to clipboard', 'success')
+            } else {
+              showAlert('Error generating sharable link', 'error')
+            }
+          }}
+          className='text-gray-400 hover:text-gray-600'
+        >
+          <Link className='h-5 w-5' />
         </button>
       </div>
 

@@ -4,13 +4,14 @@ import { ethers } from 'ethers'
 // const API_URL = "http://localhost:5000"
 
 // PRODUCTION ONLY
-const API_URL = 'https://auto-doc-backend.vercel.app'
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
 const IssueDocumentForm = ({ showAlert }) => {
   const [issuedTo, setIssuedTo] = useState('')
   const [docType, setDocType] = useState('')
   const [signer, setSigner] = useState(null)
   const [file, setFile] = useState(null)
+  const [fileName, setFileName] = useState('')
   const [issuerAddress, setIssuerAddress] = useState('')
   const docTypes = ['Certificate', 'License', 'Contract', 'Report']
 
@@ -36,6 +37,7 @@ const IssueDocumentForm = ({ showAlert }) => {
   const handleFileChange = (e) => {
     if (e.target.files) {
       setFile(e.target.files[0])
+      setFileName(e.target.files[0].name)
     }
   }
 
@@ -95,6 +97,7 @@ const IssueDocumentForm = ({ showAlert }) => {
     // formData.append(signature)
     formData.append('issuerAddress', issuerAddress)
     formData.append('file', file)
+    formData.append('fileName', fileName)
     console.log(formData)
     try {
       const response = await fetch(API_URL + '/api/upload-doc', {

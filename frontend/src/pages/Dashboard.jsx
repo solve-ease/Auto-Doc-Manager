@@ -36,7 +36,7 @@ function Dashboard({ user, setUser, ability, setAbility, showAlert }) {
   return (
     <>
       {user.role === 'admin' && <AdminDashboard />}
-      {user.role === 'user' && <Docs />}
+      {user.role === 'user' && <Docs showAlert={showAlert} />}
       {user.role === 'issuer' && <IssueDocumentForm showAlert={showAlert} />}
       {user.role === 'verifier' && <VerifierDashboard />}
     </>

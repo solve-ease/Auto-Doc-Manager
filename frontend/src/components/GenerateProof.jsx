@@ -20,16 +20,17 @@ const GenerateProof = ({ showAlert }) => {
     }
   }
   return (
-    <>
+    <div className='flex justify-center flex-col items-center'>
       <span
         onClick={() => {
           handleSubmit(30)
         }}
+        className='bg-blue-500 p-4 rounded-lg m-4 text-white cursor-pointer'
       >
         Generate Proof
       </span>
       {proofData && <QRCodeComponent proofData={proofData} />}
-    </>
+    </div>
   )
 }
 

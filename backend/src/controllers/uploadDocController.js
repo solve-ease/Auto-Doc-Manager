@@ -13,7 +13,12 @@ const uploadToIPFS = async (fileBuffer, fileName) => {
     const auth = await pinata.testAuthentication()
     const fileBlob = new Blob([fileBuffer], { type: 'application/pdf' })
     const file = new File([fileBlob], fileName, { type: 'application/pdf' })
-    const upload = await pinata.upload.file(file)
+    const options = {
+      pinataMetadata: {
+        name: fileName
+      }
+    }
+    const upload = await pinata.upload.file(file, options)
     return upload
   } catch (err) {
     console.log(err)
@@ -41,7 +46,7 @@ const uploadToDb = async (issuerAddr, ownerAddr, type) => {
 }
 const uploadDoc = async (req, res) => {
   console.log('request received')
-  const { issuerAddress, issuedTo: ownerAddr, docType: type } = req.body
+  const { issuerAddress, issuedTo: ownerAddr, docType: type, name } = req.body
 
   console.log(issuerAddress, ownerAddr, type)
   // Verify the signature

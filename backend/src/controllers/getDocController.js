@@ -34,7 +34,7 @@ const getDoc = async (req, res) => {
           }
         } else {
           console.log(doc.dbId)
-          const dbData =
+          dbData =
             doc.dbId === 'undefined'
               ? ''
               : await prisma.document.findUnique({

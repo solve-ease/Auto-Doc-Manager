@@ -17,7 +17,7 @@ const Team = () => {
     },
     {
       name: "Adarsh Maurya",
-      role: "Web & Blockchain Development",
+      role: "Web and ML Development",
       image: "https://auto-doc-seven.vercel.app/am-pic.png",
       bio: "Building Real world problem solving solutions leveraging Technology",
       social: {

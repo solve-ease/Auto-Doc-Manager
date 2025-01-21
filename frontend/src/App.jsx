@@ -105,29 +105,7 @@ function App() {
         setIsAuthenticated={setIsAuthenticated}
       />
       <AlertExample alertState={alertState} setAlertState={setAlertState} />
-      <div
-        className='absolute top-4 right-4 bg-white p-4 rounded-lg shadow-lg text-sm z-[999]'
-        id='credentials-box'
-      >
-        <button
-          className='absolute font-medium top-2 right-2 text-gray-500 hover:text-gray-700'
-          onClick={() =>
-            (document.getElementById('credentials-box').style.display = 'none')
-          }
-        >
-          &times;
-        </button>
-        <h2 className='text-lg font-bold'>Test Credentials</h2>
-        <h3 className='text-base font-semibold'>Verifying Authority</h3>
-        <p>Email: singhamandevofficial@gmail.com</p>
-        <p>Password: 12345678</p>
-        <h3 className='text-base font-semibold'>Issuing Authority</h3>
-        <p>Email: avengerstonystark419@gmail.com</p>
-        <p>Password: #BallIsLife1</p>
-        <h3 className='text-base font-semibold'>Individual User</h3>
-        <p>Email: adarshmaurya9415@gmail.com</p>
-        <p>Password: adarsh@123</p>
-      </div>
+      
       <Routes>
         <Route
           path='/'

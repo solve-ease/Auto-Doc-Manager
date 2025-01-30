@@ -6,8 +6,8 @@ const AdminDashboard = () => {
       orgName: 'Tech Innovators',
       parentOrg: 'Global Tech',
       walletAddress: '0x1234567890abcdef1234567890abcdef12345678',
-      currentRole: 'Developer',
-      appliedFor: 'Senior Developer',
+      currentRole: 'User',
+      appliedFor: 'Issuing Authority',
       email: 'dev@techinnovators.com',
       appliedAt: '2024-01-01 10:00'
     },
@@ -15,8 +15,8 @@ const AdminDashboard = () => {
       orgName: 'Health Solutions',
       parentOrg: 'Global Health',
       walletAddress: '0xabcdef1234567890abcdef1234567890abcdef12',
-      currentRole: 'Analyst',
-      appliedFor: 'Senior Analyst',
+      currentRole: 'User',
+      appliedFor: 'Issuing Authority',
       email: 'analyst@healthsolutions.com',
       appliedAt: '2024-01-02 11:30'
     },
@@ -24,8 +24,8 @@ const AdminDashboard = () => {
       orgName: 'EduTech',
       parentOrg: 'Global Education',
       walletAddress: '0x7890abcdef1234567890abcdef1234567890abcd',
-      currentRole: 'Teacher',
-      appliedFor: 'Principal',
+      currentRole: 'User',
+      appliedFor: 'Verifying Authority',
       email: 'teacher@edutech.com',
       appliedAt: '2024-01-03 09:45'
     },
@@ -33,16 +33,16 @@ const AdminDashboard = () => {
       orgName: 'Finance Corp',
       parentOrg: 'Global Finance',
       walletAddress: '0x4567890abcdef1234567890abcdef1234567890a',
-      currentRole: 'Accountant',
-      appliedFor: 'Senior Accountant',
+      currentRole: 'User',
+      appliedFor: 'Issuing Authority',
       email: 'accountant@financecorp.com',
       appliedAt: '2024-01-04 14:20'
     },
     {
       orgName: 'Retail Giants',
       walletAddress: '0xabcdef7890abcdef1234567890abcdef12345678',
-      currentRole: 'Manager',
-      appliedFor: 'Regional Manager',
+      currentRole: 'User',
+      appliedFor: 'Verifying Authority',
       email: 'manager@retailgiants.com',
       appliedAt: '2024-01-05 16:10'
     }

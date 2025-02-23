@@ -164,7 +164,7 @@ const Docs = ({ showAlert }) => {
             <DocCard
               key={index}
               docUrl={doc.ipfsData.url}
-              docName={doc.dbData.type}
+              docName={doc.dbData.type || 'Unnamed Document'}
               generateDocUrl={generateDocUrl}
               showAlert={showAlert}
               dbId={doc.dbData.id}

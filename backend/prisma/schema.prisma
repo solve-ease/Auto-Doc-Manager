@@ -1,5 +1,6 @@
 //first time this worked -Remember to put env variables through cmd for migrations
 //second time I added connection_limit=1 to the db_url in .env and it worked
+//use percentage encoding for special characters in db urls
 generator client {
   provider = "prisma-client-js"
 }
